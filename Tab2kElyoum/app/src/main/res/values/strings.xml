@@ -10,4 +10,6 @@
     <string name="register">Register</string>
     <string name="oruse">Or use</string>
     <string name="skip">Skip</string>
+    <string name="registerbtn">Register</string>
+    <string name="confirm_pass">Confirm Password</string>
 </resources>
