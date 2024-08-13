@@ -8,5 +8,13 @@
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.example.tab2kelyoum.SplashScreenFragment"
-        tools:layout="@layout/fragment_splash_screen" />
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.tab2kelyoum.SignInFragment"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

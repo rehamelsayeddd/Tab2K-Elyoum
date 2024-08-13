@@ -2,4 +2,12 @@
     <string name="app_name">Tab2kElyoum</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Enter_email">Enter Email</string>
+    <string name="enter_password" />
+    <string name="Enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="donthave_account">Don\'t Have an account?</string>
+    <string name="register">Register</string>
+    <string name="oruse">Or use</string>
+    <string name="skip">Skip</string>
 </resources>
