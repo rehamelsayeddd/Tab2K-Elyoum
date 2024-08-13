@@ -34,7 +34,7 @@ public class SignInFragment extends Fragment {
         et_email = view.findViewById(R.id.et_email);
         et_password = view.findViewById(R.id.et_password);
         googleSignIn = view.findViewById(R.id.btn_signInWithGoogle);
-        register = view.findViewById(R.id.buttonSignIn);
+        register = view.findViewById(R.id.btnregister);
         btnloginAsGuest = view.findViewById(R.id.btn_loginasguest);
 
         // Set the click listener for the register button

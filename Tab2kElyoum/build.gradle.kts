@@ -3,8 +3,7 @@ buildscript {
     dependencies {
         classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
 
-        //for google sign in with firebase
-        classpath ("com.google.gms:google-services:4.3.14")
+
     }
 }
 
