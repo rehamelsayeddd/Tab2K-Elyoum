@@ -2,46 +2,55 @@ package com.example.tab2kelyoum;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.content.Context;
-import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.NetworkRequest;
 
-
+/**
+ * NetworkChecker class to check if the device is connected to the internet.
+ * It follows a Singleton pattern to ensure only one instance is used throughout the app.
+ */
 public class NetworkChecker {
 
-        private static Context context;
-        public static NetworkChecker instance = null;
+    // Singleton instance of NetworkChecker
+    private static NetworkChecker instance = null;
 
-        private NetworkChecker() {
+    // ConnectivityManager to check network state
+    private ConnectivityManager connectivityManager;
 
+
+    private NetworkChecker(Context context) {
+        // Initialize the ConnectivityManager only if the context is not null
+        if (context != null) {
+            this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         }
+    }
 
-        public static NetworkChecker getInstance(Context contextInput) {
-            if (instance == null) {
-                context = contextInput;
-                instance = new NetworkChecker();
-            }
-            return instance;
+    /**
+     * Provides a global point of access to the NetworkChecker instance.
+     * It initializes the instance if it hasn't been created yet.
+     *
+     * @param context The application context used to initialize the instance.
+     * @return The singleton instance of NetworkChecker.
+     */
+    public static NetworkChecker getInstance(Context context) {
+        if (instance == null) {
+            // Create a new instance if it doesn't exist, using the provided context
+            instance = new NetworkChecker(context);
         }
-
-        public static NetworkChecker getInstance() {
-            if (instance == null) {
-                instance = new NetworkChecker();
-            }
-            return instance;
-        }
-
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        public Boolean checkIfInternetIsConnected() {
-            return ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED));
-        }
-
+        return instance;
     }
 
 
+    /**
+     * Checks if the device is currently connected to the internet.
+     *
+     * @return True if the device is connected to the internet, false otherwise.
+     */
+    public boolean checkIfInternetIsConnected() {
+        // Retrieve the active network information
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        // Return true if the device is connected to the internet, false otherwise
+        return networkInfo != null && networkInfo.isConnected();
+    }
+}
