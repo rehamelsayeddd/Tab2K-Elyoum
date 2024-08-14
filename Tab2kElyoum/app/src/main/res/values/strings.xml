@@ -18,4 +18,5 @@
     <string name="regbtn">Register Here</string>
     <string name="Dailyinspo">Daily Inspiration</string>
     <string name="plannedtoday">Planned Today</string>
+    <string name="Logout">Logout</string>
 </resources>
