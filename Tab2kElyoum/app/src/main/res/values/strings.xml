@@ -26,6 +26,14 @@
     <string name="loggingOut">Logging out</string>
     <string name="must_login"> must login</string>
     <string name="access"> access </string>
+    <string name="search_by_all_meals">Search by all meals</string>
+    <string name="search_by_area">Search by area</string>
+    <string name="search_by_ingrediant">Search by ingrediant</string>
+    <string name="all_meals">All meals</string>
+    <string name="area">Area</string>
+    <string name="ingridient">Ingrediant</string>
+    <string name="search_by_category">Search by category</string>
+    <string name="category">Category</string>
 
 
 </resources>
