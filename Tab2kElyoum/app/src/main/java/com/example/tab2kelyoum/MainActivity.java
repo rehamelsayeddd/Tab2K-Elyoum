@@ -1,7 +1,6 @@
 package com.example.tab2kelyoum;
-import com.example.tab2kelyoum.R;
+
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,168 +35,189 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize views
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view); // Ensure you use the correct ID for your NavigationView
-        bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
-        drawerButton = findViewById(R.id.img_logOut); // Ensure you use the correct ID for your drawer button
+        try {
+            // Initialize views
+            drawerLayout = findViewById(R.id.drawer_layout);
+            navigationView = findViewById(R.id.nav_view);
+            bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
+            drawerButton = findViewById(R.id.img_logOut);
 
-        // Set up the action bar
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.menu); // Menu icon for drawer
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+            // Set up the action bar
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeAsUpIndicator(R.drawable.menu); // Menu icon for drawer
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
 
-        // Set up the NavController
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+            // Set up the NavController
+            navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        // Handle bottom navigation item selections
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
+            // Define resource IDs as variables
+            final int homepageFragmentId = R.id.homepageFragment;
+            final int navSearchId = R.id.nav_search;
+            final int navFavoriteMealId = R.id.nav_favoriteMeal;
+            final int navWeekPlannersId = R.id.nav_weekPlanners;
+            final int drawerLogoutId = R.id.drawerLogout;
 
-                            case R.id.homepageFragment:
-                                while (MainActivity.navController.popBackStack() == true) {
-                                }
-                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_dailyInspirations);
+            // Handle bottom navigation item selections
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    try {
+                        int itemId = item.getItemId();
+                        if (itemId == homepageFragmentId) {
+                            clearBackStack();
+                            navController.navigate(R.id.homepageFragment);
+                            return true;
+                        } else if (itemId == navSearchId) {
+                            clearBackStack();
+                            navController.navigate(R.id.nav_search);
+                            return true;
+                        } else if (itemId == navFavoriteMealId) {
+                            if (isLoginAsGuest) {
+                                Toast.makeText(MainActivity.this, R.string.access, Toast.LENGTH_SHORT).show();
+                                return false;
+                            } else {
+                                clearBackStack();
+                                navController.navigate(R.id.nav_favoriteMeal);
                                 return true;
-                            case R.id.nav_search:
-                                while (MainActivity.navController.popBackStack() == true) {
-                                }
-                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_search);
+                            }
+                        } else if (itemId == navWeekPlannersId) {
+                            if (isLoginAsGuest) {
+                                Toast.makeText(MainActivity.this, R.string.must_login, Toast.LENGTH_SHORT).show();
+                                return false;
+                            } else {
+                                clearBackStack();
+                                navController.navigate(R.id.nav_weekPlanners);
                                 return true;
-                            case R.id.nav_favoriteMeal:
-                                if (isLoginAsGuest == true) {
-                                    Toast.makeText(MainActivity.this, R.string.access, Toast.LENGTH_SHORT).show();
-                                    return false;
-                                } else {
-                                    while (MainActivity.navController.popBackStack() == true) {
-                                    }
-                                    Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_favoriteMeals);
-                                    return true;
-                                }
-
-                            case R.id.nav_weekPlanners:
-                                if (isLoginAsGuest == true) {
-                                    Toast.makeText(MainActivity.this, R.string.must_login, Toast.LENGTH_SHORT).show();
-                                    return false;
-                                } else {
-                                    while (MainActivity.navController.popBackStack() == true) {
-                                    }
-                                    Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_weekPlanner);
-                                    return true;
-                                }
+                            }
                         }
-                        return false;
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error navigating: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
-
-        // Handle navigation drawer item selections
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.drawerLogout:
-                        navigationView.setVisibility(View.GONE);
-                        logOut();
-                        break;
-
-                    default:
-                        // Handle other cases or provide default behavior if needed
-                        break;
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-
-
-        // Handle drawer button click
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (drawerLayout.isDrawerOpen(navigationView)) {
-                    drawerLayout.closeDrawer(navigationView);
-                } else {
-                    drawerLayout.openDrawer(navigationView);
+            // Handle navigation drawer item selections
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    try {
+                        if (item.getItemId() == drawerLogoutId) {
+                            navigationView.setVisibility(View.GONE);
+                            logOut();
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error handling drawer item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
                 }
-            }
-        });
+            });
 
-        // Handle destination changes to show/hide bottom navigation and drawer button
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                switch (destination.getId()) {
-                    case R.id.homepageFragment:
-                    case R.id.nav_search:
-                    case R.id.nav_favoriteMeal:
-                    case R.id.nav_weekPlanners:
-                        bottomNavigationView.setVisibility(View.VISIBLE);
-                        drawerButton.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        bottomNavigationView.setVisibility(View.GONE);
-                        drawerButton.setVisibility(View.GONE);
+            // Handle drawer button click
+            drawerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if (drawerLayout.isDrawerOpen(navigationView)) {
+                            drawerLayout.closeDrawer(navigationView);
+                        } else {
+                            drawerLayout.openDrawer(navigationView);
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error handling drawer button: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
+            });
+
+            // Handle destination changes to show/hide bottom navigation and drawer button
+            navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+                @Override
+                public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                    try {
+                        int destinationId = destination.getId();
+                        if (destinationId == homepageFragmentId || destinationId == navSearchId || destinationId == navFavoriteMealId || destinationId == navWeekPlannersId) {
+                            bottomNavigationView.setVisibility(View.VISIBLE);
+                            drawerButton.setVisibility(View.VISIBLE);
+                        } else {
+                            bottomNavigationView.setVisibility(View.GONE);
+                            drawerButton.setVisibility(View.GONE);
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error handling destination change: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error initializing MainActivity: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void clearBackStack() {
+        try {
+            while (navController.popBackStack()) {
+                // pop all fragments from the stack
             }
-        });
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error clearing back stack: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Method to handle user logout
     private void logOut() {
-        // Clear any specific instance variables or application data
-        // PlannedTodayAdapter.InstanceProvidingMeals = null;
+        try {
+            FirebaseAuth.getInstance().signOut();
 
-        // Sign out from Firebase
-        FirebaseAuth.getInstance().signOut();
-
-        // Check if the user is logged out
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            // Set login state to guest
-            // isLoginAsGuest = false;
-
-            // Delete local data (assuming a method for local data removal)
-            deleteLocalData();
-
-            // Clear back stack and navigate to sign-in screen
-            while (navController.popBackStack()) { /* pop all fragments from the stack */ }
-
-            // Show logout toast message
-            Toast.makeText(MainActivity.this, R.string.logout, Toast.LENGTH_SHORT).show();
-
-            // Navigate to the sign-in fragment
-            Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.signInFragment);
-        } else {
-            Toast.makeText(MainActivity.this, R.string.loggingOut, Toast.LENGTH_SHORT).show();
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                deleteLocalData();
+                clearBackStack();
+                Toast.makeText(MainActivity.this, R.string.logout, Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.signInFragment);
+            } else {
+                Toast.makeText(MainActivity.this, R.string.loggingOut, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error logging out: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to delete local data
     private void deleteLocalData() {
-        // Add code to delete local data, such as Room database tables, shared preferences, etc.
+        try {
+            // Add code to delete local data, such as Room database tables, shared preferences, etc.
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error deleting local data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
+        try {
+            if (item.getItemId() == android.R.id.home) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+                return true;
             }
-            return true;
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error handling options item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        return navController.navigateUp() || super.onSupportNavigateUp();
+        try {
+            return navController.navigateUp() || super.onSupportNavigateUp();
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Error navigating up: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }

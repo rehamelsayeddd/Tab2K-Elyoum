@@ -24,5 +24,8 @@
     <string name="calen">Calender</string>
     <string name="logout">Logged out</string>
     <string name="loggingOut">Logging out</string>
+    <string name="must_login"> must login</string>
+    <string name="access"> access </string>
+
 
 </resources>
