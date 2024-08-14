@@ -19,4 +19,10 @@
     <string name="Dailyinspo">Daily Inspiration</string>
     <string name="plannedtoday">Planned Today</string>
     <string name="Logout">Logout</string>
+    <string name="home">Home</string>
+    <string name="fav">Fvaourite</string>
+    <string name="favv">Favourite</string>
+    <string name="search">Search</string>
+    <string name="calender">Calender</string>
+    <string name="username">email name</string>
 </resources>
