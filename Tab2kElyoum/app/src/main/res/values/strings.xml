@@ -16,4 +16,6 @@
     <string name="Home">Home</string>
     <string name="registerbutton">Register</string>
     <string name="regbtn">Register Here</string>
+    <string name="Dailyinspo">Daily Inspiration</string>
+    <string name="plannedtoday">Planned Today</string>
 </resources>
