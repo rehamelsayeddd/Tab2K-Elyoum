@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
+
+
 }
 
 android {
@@ -38,9 +41,12 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.play.services.base)
+    implementation(libs.firebase.auth)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    
     //retrofit and gson
     implementation ("com.google.code.gson:gson:2.8.5")
     implementation  ("com.squareup.retrofit2:retrofit:2.4.0")
@@ -58,4 +64,10 @@ dependencies {
 
     //Lottie
     implementation ("com.airbnb.android:lottie:5.0.3")
+
+    //googleplay service
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
+
 }
