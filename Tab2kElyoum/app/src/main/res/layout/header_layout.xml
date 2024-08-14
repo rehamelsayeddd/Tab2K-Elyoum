@@ -20,17 +20,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- TextView that represents the title, such as a username -->
+    <!-- TextView that represents the title, such as a email -->
     <TextView
         android:id="@+id/tv_headerDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="64dp"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/nav_header_image"
-        app:layout_constraintTop_toTopOf="@+id/nav_header_image"
-        tools:text="@string/username" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:gravity="start"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

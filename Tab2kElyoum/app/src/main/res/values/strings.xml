@@ -4,7 +4,6 @@
     <string name="client_id">606708566778-rfqqhppijh174ame99b1rj68j1rhn1qt.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Enter_email">Enter Email</string>
-    <string name="enter_password" />
     <string name="Enter_password">Enter Password</string>
     <string name="login">Login</string>
     <string name="donthave_account">Don\'t Have an account?</string>
@@ -14,15 +13,16 @@
     <string name="registerbtn">Register</string>
     <string name="confirm_pass">Confirm Password</string>
     <string name="Home">Home</string>
-    <string name="registerbutton">Register</string>
     <string name="regbtn">Register Here</string>
     <string name="Dailyinspo">Daily Inspiration</string>
     <string name="plannedtoday">Planned Today</string>
     <string name="Logout">Logout</string>
     <string name="home">Home</string>
-    <string name="fav">Fvaourite</string>
     <string name="favv">Favourite</string>
     <string name="search">Search</string>
-    <string name="calender">Calender</string>
     <string name="username">email name</string>
+    <string name="calen">Calender</string>
+    <string name="logout">Logged out</string>
+    <string name="loggingOut">Logging out</string>
+
 </resources>

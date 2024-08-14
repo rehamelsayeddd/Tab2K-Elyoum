@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:menu="" />
+            app:menu="@menu/bottom_menu" />
 
         <!-- ImageView for Log Out (Menu Icon) -->
         <ImageView
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:visibility="gone"
-        app:headerLayout=""
-        app:menu="" />
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
