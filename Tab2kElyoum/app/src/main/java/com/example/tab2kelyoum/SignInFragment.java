@@ -2,6 +2,7 @@ package com.example.tab2kelyoum;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,34 +16,56 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class SignInFragment extends Fragment {
 
  private TextInputEditText et_email;
  private TextInputEditText et_password;
+ private Button btnlogin;
  private SignInButton googleSignIn;
  private TextView register;
  private Button btnloginAsGuest;
  private FirebaseAuth firebaseAuth;
  private ProgressDialog loadingBar;
  private NetworkChecker networkChecker;
+ private GoogleSignInClient googleSignInClient;
  private View view;
- private Button btnlogin;
+
 
  private static final String TAG = "SignInFragment";
+ private static final int RC_SIGN_IN = 9001;
 
  @Override
  public void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
+
   // Initialize FirebaseAuth instance
   firebaseAuth = FirebaseAuth.getInstance();
+
   // Initialize NetworkChecker with the context
   networkChecker = NetworkChecker.getInstance(requireContext());
+
+  // Configure Google Sign-In
+  GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+          .requestIdToken(getString(R.string.client_id)) // Replace with your Web client ID
+          .requestEmail()
+          .build();
+  googleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
  }
 
  @Override
@@ -64,7 +87,7 @@ public class SignInFragment extends Fragment {
   loadingBar.setCanceledOnTouchOutside(false);
 
   // Initialize UI components
-  btnlogin = view.findViewById(R.id.btnregister1);
+  btnlogin = view.findViewById(R.id.btnlogin);
   et_email = view.findViewById(R.id.et_email);
   et_password = view.findViewById(R.id.et_password);
   googleSignIn = view.findViewById(R.id.btn_signInWithGoogle);
@@ -117,13 +140,51 @@ public class SignInFragment extends Fragment {
   }
  }
 
- // Placeholder method for Google Sign-In
+ // Method to handle Google Sign-In
  private void signInWithGoogle() {
   if (!networkChecker.checkIfInternetIsConnected()) {
    Toast.makeText(requireContext(), "Turn internet on to be able to sign in.", Toast.LENGTH_SHORT).show();
-  } else {
-   // Google Sign-In logic should be handled here (requires integrating Google Sign-In SDK)
+   return;
   }
+
+  // Start the sign-in intent
+  Intent signInIntent = googleSignInClient.getSignInIntent();
+  startActivityForResult(signInIntent, RC_SIGN_IN);
+ }
+
+ @Override
+ public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+  super.onActivityResult(requestCode, resultCode, data);
+
+  if (requestCode == RC_SIGN_IN) {
+   Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+   try {
+    GoogleSignInAccount account = task.getResult(ApiException.class);
+    if (account != null) {
+     firebaseAuthWithGoogle(account);
+    }
+   } catch (ApiException e) {
+    // Handle sign-in error
+    Toast.makeText(requireContext(), "Google Sign-In failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+   }
+  }
+ }
+
+ // Method to authenticate with Firebase using Google account
+ private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+  AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+  firebaseAuth.signInWithCredential(credential)
+          .addOnCompleteListener(requireActivity(), task -> {
+           if (task.isSuccessful()) {
+            // Sign-in successful
+            Toast.makeText(requireContext(), "Google Sign-In successful", Toast.LENGTH_SHORT).show();
+            NavController navController = NavHostFragment.findNavController(SignInFragment.this);
+            navController.navigate(R.id.action_signInFragment_to_homepageFragment);
+           } else {
+            // Handle sign-in error
+            handleSignInError(task.getException());
+           }
+          });
  }
 
  // Method to prompt the user before logging in as a guest
