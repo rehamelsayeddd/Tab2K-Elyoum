@@ -78,7 +78,11 @@
         android:id="@+id/searchByIngrdiantFragment"
         android:name="com.example.tab2kelyoum.searchByIngrdiantFragment"
         android:label="fragment_search_by_ingrdiant"
-        tools:layout="@layout/fragment_search_by_ingrdiant" />
+        tools:layout="@layout/fragment_search_by_ingrdiant" >
+        <action
+            android:id="@+id/action_searchByIngrdiantFragment_to_mealByIngrediantFragment"
+            app:destination="@id/mealByIngrediantFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchBYCountryFragment"
         android:name="com.example.tab2kelyoum.searchBYCountryFragment"
@@ -89,4 +93,9 @@
         android:name="com.example.tab2kelyoum.categoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" />
+    <fragment
+        android:id="@+id/mealByIngrediantFragment"
+        android:name="com.example.tab2kelyoum.mealByIngrediantFragment"
+        android:label="fragment_meal_by_ingrediant"
+        tools:layout="@layout/fragment_meal_by_ingrediant" />
 </navigation>

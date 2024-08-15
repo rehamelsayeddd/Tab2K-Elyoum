@@ -37,18 +37,20 @@
     <string name="meals">Meals</string>
     <string name="search_for_a_meal">Search for a meal</string>
     <string name="search_by_ingredient">Search by ingredient </string>
-    <string name="ingredients"> Ingredients </string>
-    <string name="areas"> Areas </string>
-    <string name="categories"> Categories </string>
-    <string name="my_week_plan"> My week plan </string>
-    <string name="saturday"> Saturday </string>
-    <string name="sunday"> Sunday </string>
+    <string name="ingredients">Ingredients </string>
+    <string name="areas">Areas</string>
+    <string name="categories">Categories</string>
+    <string name="my_week_plan">My week plan</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
-    <string name="tuesday"> Tuesday </string>
-    <string name="wednesday"> Wednesday </string>
-    <string name="thursday"> Thursday </string>
-    <string name="friday"> Friday </string>
-    <string name="my_saved_recipes"> My Saved Meals </string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="my_saved_recipes">My Saved Meals</string>
+    <string name="meals_filtered_by_ingredient">Meals filtered by ingredient</string>
+    <string name="add_to_weekplan">Add to weekplan</string>
 
 
 
