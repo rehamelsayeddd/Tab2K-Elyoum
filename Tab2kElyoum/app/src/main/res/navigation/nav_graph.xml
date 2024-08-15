@@ -41,4 +41,61 @@
         android:name="com.example.tab2kelyoum.homepageFragment"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" />
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.tab2kelyoum.nav_search"
+        android:label="fragment_nav_search"
+        tools:layout="@layout/fragment_nav_search" >
+        <action
+            android:id="@+id/action_nav_search_to_searchByAllMealsFragment"
+            app:destination="@id/searchByAllMealsFragment" />
+        <action
+            android:id="@+id/action_nav_search_to_searchByIngrdiantFragment"
+            app:destination="@id/searchByIngrdiantFragment" />
+        <action
+            android:id="@+id/action_nav_search_to_searchBYCountryFragment"
+            app:destination="@id/searchBYCountryFragment" />
+        <action
+            android:id="@+id/action_nav_search_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_favoriteMeal"
+        android:name="com.example.tab2kelyoum.nav_favoriteMeal"
+        android:label="fragment_nav_favorite_meal"
+        tools:layout="@layout/fragment_nav_favorite_meal" />
+    <fragment
+        android:id="@+id/nav_weekPlanners"
+        android:name="com.example.tab2kelyoum.nav_weekPlanners"
+        android:label="fragment_nav_week_planners"
+        tools:layout="@layout/fragment_nav_week_planners" />
+    <fragment
+        android:id="@+id/searchByAllMealsFragment"
+        android:name="com.example.tab2kelyoum.searchByAllMealsFragment"
+        android:label="fragment_search_by_all_meals"
+        tools:layout="@layout/fragment_search_by_all_meals" />
+    <fragment
+        android:id="@+id/searchByIngrdiantFragment"
+        android:name="com.example.tab2kelyoum.searchByIngrdiantFragment"
+        android:label="fragment_search_by_ingrdiant"
+        tools:layout="@layout/fragment_search_by_ingrdiant" >
+        <action
+            android:id="@+id/action_searchByIngrdiantFragment_to_mealByIngrediantFragment"
+            app:destination="@id/mealByIngrediantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBYCountryFragment"
+        android:name="com.example.tab2kelyoum.searchBYCountryFragment"
+        android:label="fragment_search_b_y_country"
+        tools:layout="@layout/fragment_search_b_y_country" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.tab2kelyoum.categoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
+    <fragment
+        android:id="@+id/mealByIngrediantFragment"
+        android:name="com.example.tab2kelyoum.mealByIngrediantFragment"
+        android:label="fragment_meal_by_ingrediant"
+        tools:layout="@layout/fragment_meal_by_ingrediant" />
 </navigation>

@@ -4,7 +4,6 @@
     <string name="client_id">606708566778-rfqqhppijh174ame99b1rj68j1rhn1qt.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Enter_email">Enter Email</string>
-    <string name="enter_password" />
     <string name="Enter_password">Enter Password</string>
     <string name="login">Login</string>
     <string name="donthave_account">Don\'t Have an account?</string>
@@ -14,6 +13,46 @@
     <string name="registerbtn">Register</string>
     <string name="confirm_pass">Confirm Password</string>
     <string name="Home">Home</string>
-    <string name="registerbutton">Register</string>
     <string name="regbtn">Register Here</string>
+    <string name="Dailyinspo">Daily Inspiration</string>
+    <string name="plannedtoday">Planned Today</string>
+    <string name="Logout">Logout</string>
+    <string name="home">Home</string>
+    <string name="favv">Favourite</string>
+    <string name="search">Search</string>
+    <string name="username">email name</string>
+    <string name="calen">Calender</string>
+    <string name="logout">Logged out</string>
+    <string name="loggingOut">Logging out</string>
+    <string name="must_login"> must login</string>
+    <string name="access"> access </string>
+    <string name="search_by_all_meals">Search by all meals</string>
+    <string name="search_by_area">Search by area</string>
+    <string name="search_by_ingrediant">Search by ingrediant</string>
+    <string name="all_meals">All meals</string>
+    <string name="area">Area</string>
+    <string name="ingridient">Ingrediant</string>
+    <string name="search_by_category">Search by category</string>
+    <string name="category">Category</string>
+    <string name="meals">Meals</string>
+    <string name="search_for_a_meal">Search for a meal</string>
+    <string name="search_by_ingredient">Search by ingredient </string>
+    <string name="ingredients">Ingredients </string>
+    <string name="areas">Areas</string>
+    <string name="categories">Categories</string>
+    <string name="my_week_plan">My week plan</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="my_saved_recipes">My Saved Meals</string>
+    <string name="meals_filtered_by_ingredient">Meals filtered by ingredient</string>
+    <string name="add_to_weekplan">Add to weekplan</string>
+
+
+
+
 </resources>

@@ -28,9 +28,6 @@ public class NetworkChecker {
     /**
      * Provides a global point of access to the NetworkChecker instance.
      * It initializes the instance if it hasn't been created yet.
-     *
-     * @param context The application context used to initialize the instance.
-     * @return The singleton instance of NetworkChecker.
      */
     public static NetworkChecker getInstance(Context context) {
         if (instance == null) {
@@ -43,8 +40,7 @@ public class NetworkChecker {
 
     /**
      * Checks if the device is currently connected to the internet.
-     *
-     * @return True if the device is connected to the internet, false otherwise.
+     * return True if the device is connected to the internet, false otherwise.
      */
     public boolean checkIfInternetIsConnected() {
         // Retrieve the active network information
