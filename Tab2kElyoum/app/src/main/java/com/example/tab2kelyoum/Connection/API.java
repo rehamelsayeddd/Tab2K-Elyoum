@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface API {
         // Base URL for the Meal DB API
-        String BASE_URL_DAILY_INSPIRATIONS = "https://www.themealdb.com/api/json/v1/1/";
+        String BASE_URL_MealItems = "https://www.themealdb.com/api/json/v1/1/";
 
         //(observable) allows you to subscribe to data streams and react to data changes asynchronously by rx java.
              //to get a random meal by using rxjava

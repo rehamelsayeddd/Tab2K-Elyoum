@@ -7,7 +7,7 @@ import java.util.List;
 public class RootAreasList {
     @SerializedName("meals")
     private List<EachAreaModel> meals;
-
+//getter method for area
     public List<EachAreaModel> getMeals() {
         return meals;
     }
