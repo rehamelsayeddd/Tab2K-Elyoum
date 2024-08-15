@@ -34,6 +34,11 @@
     <string name="ingridient">Ingrediant</string>
     <string name="search_by_category">Search by category</string>
     <string name="category">Category</string>
+    <string name="meals">Meals</string>
+    <string name="search_for_a_meal">Search for a meal</string>
+    <string name="search_by_ingredient">Search by ingredient </string>
+    <string name="ingredients"> Ingredients </string>
+
 
 
 </resources>
