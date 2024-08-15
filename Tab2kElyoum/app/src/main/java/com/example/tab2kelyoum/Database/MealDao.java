@@ -12,15 +12,13 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public interface MealDao {
 
+@Dao
+public interface MealDao {
 
     // DAO (Data Access Object) interface for interacting with the MealsItem table in the Room database
     //by using rxjava to handle data and make it synchronizied when data changes
-    @Dao
-    public interface MealDAO {
-
-        // Query to retrieve all stored MealsItem records as a Flowable list
+    // Query to retrieve all stored MealsItem records as a Flowable list
         @Query("SELECT * FROM MealsItem")
         Flowable<List<MealsItem>> getStoredMealsItems();
 
@@ -41,4 +39,4 @@ public interface MealDao {
         void deleteTableRoom();
     }
 
-}
+
