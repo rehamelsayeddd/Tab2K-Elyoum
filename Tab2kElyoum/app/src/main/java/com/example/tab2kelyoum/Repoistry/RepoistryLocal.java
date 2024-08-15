@@ -26,7 +26,7 @@ public class RepoistryLocal {
     private static final String TAG = "Repository";
     private Context context;
     private MealDao mealDAO;
-    private Flowable<List<MealsItem>> storedMealsItems; // Observable list of stored meals items
+    private Flowable<List<MealsItem>> storedMealsItems; // Observable list of stored meals items (rxjava)
     private List<MealsItem> mealsItemsFromFirestore = new ArrayList<>();
     private List<MealsItem> mealsWeekPlanSaturday = new ArrayList<>(), mealsWeekPlanSunday = new ArrayList<>(), mealsWeekPlanMonday = new ArrayList<>(), mealsWeekPlanTuesday = new ArrayList<>(), mealsWeekPlanWednesday = new ArrayList<>(), mealsWeekPlanThursday = new ArrayList<>(), mealsWeekPlanFriday = new ArrayList<>();
   private homepageInterface homepageInterface; // Interface for responding to data loading events

@@ -12,14 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class RetrofitClient {
-//usong java rx retrofit
-    private static RetrofitClient instance = null; //single ton
+//using rxjava
+    private static RetrofitClient instance = null;
     private API myApi;
     private static final String TAG = "API_Client";
 
 
     public RetrofitClient() {
-        Gson gson = new GsonBuilder().create();//handle JSON serialization and deserialization.
+        Gson gson = new GsonBuilder().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API.BASE_URL_MealItems)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
@@ -40,4 +40,5 @@ public class RetrofitClient {
     public API getMyApi() {
         return myApi;
     }
+
 }

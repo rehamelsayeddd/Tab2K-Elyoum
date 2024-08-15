@@ -57,6 +57,9 @@ dependencies {
     implementation   ("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 
+    // Import the Firebase BoM
+    implementation ("com.google.firebase:firebase-bom:31.1.1")
+
     //Navigation fragment
     implementation ("androidx.navigation:navigation-fragment:2.3.5")
     implementation ("androidx.navigation:navigation-ui:2.3.5")
@@ -85,5 +88,14 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$roomVersion")
     implementation ("androidx.sqlite:sqlite:2.3.0")
     testImplementation("androidx.room:room-testing:$roomVersion")
+
+    implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+    //Firestore
+    implementation ("com.google.firebase:firebase-firestore:24.4.1")
+
+
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+
 
 }
