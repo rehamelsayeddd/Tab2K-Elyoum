@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
-
+    id ("androidx.navigation.safeargs")
 
 }
 
@@ -65,9 +65,24 @@ dependencies {
     //Lottie
     implementation ("com.airbnb.android:lottie:5.0.3")
 
-    //googleplay service
+    //googleplay service to enable signing in using google
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    //RXJAVA
+    implementation ("io.reactivex.rxjava3:rxjava:2.5.0")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
 
+    //rx retrofit
+    implementation ("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+
+    val roomVersion = "2.5.0"
+    //Room
+    implementation ("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor ("androidx.room:room-compiler:$roomVersion")
+
+    //RX Room
+    implementation("androidx.room:room-rxjava3:$roomVersion")
+    implementation ("androidx.sqlite:sqlite:2.3.0")
+    testImplementation("androidx.room:room-testing:$roomVersion")
 
 }
