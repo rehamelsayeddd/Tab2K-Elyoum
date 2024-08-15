@@ -231,7 +231,7 @@
                         android:layout_margin="20dp"
                         android:background="@drawable/circularsearch"
                         android:padding="3dp"
-                        android:src="@drawable/category"
+                        android:src="@drawable/category2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
