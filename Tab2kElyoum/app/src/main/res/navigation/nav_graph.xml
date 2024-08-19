@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.tab2kelyoum.SignInFragment"
+        android:name="com.example.tab2kelyoum.SignIn.SignInFragment"
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_signInFragment_to_registerFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/homepageFragment"
-        android:name="com.example.tab2kelyoum.homepageFragment"
+        android:name="com.example.tab2kelyoum.Home.View.homepageFragment"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" />
     <fragment

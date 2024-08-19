@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SignIn;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,11 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +29,6 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.material.textfield.TextInputEditText;
 

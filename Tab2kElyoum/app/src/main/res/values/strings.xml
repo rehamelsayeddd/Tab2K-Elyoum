@@ -52,6 +52,15 @@
     <string name="meals_filtered_by_ingredient">Meals filtered by ingredient</string>
     <string name="add_to_weekplan">Add to weekplan</string>
     <string name="empty_at_first">Empty at first</string>
+    <string name="noInternet">No Internet!</string>
+    <string name="backInternet">Back Internet!</string>
+    <string name="deleteAcount">Delete Account!</string>
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.Home.Presenter;
 
 import android.content.Context;
 
@@ -12,12 +12,12 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public class homePresenter {
 
-    private homepageInterface homepageInterface;
+    private com.example.tab2kelyoum.Home.Presenter.homepageInterface homepageInterface;
     private RepoistryLocal repoistryLocal;
     private RepoistryRemote repoistryRemote;
     Context context;
 //constructor to  enable the presenter to communicate with the view and access resources.
-    public homePresenter (homepageInterface homepageInterface , Context context){
+    public homePresenter (com.example.tab2kelyoum.Home.Presenter.homepageInterface homepageInterface , Context context){
         this.homepageInterface=homepageInterface;
         this.context=context;
     }
@@ -32,7 +32,7 @@ public class homePresenter {
         return repoistryLocal.returnStoredMealsItems();
     }
     //calls local repo to load data from firestore into local roomDATABASE
-    public void loadFromfirestire (){
+    public void loadFromfirestore (){
         repoistryLocal = new RepoistryLocal(homepageInterface , context);
         repoistryLocal.loadRoomFromFirestore();
     }

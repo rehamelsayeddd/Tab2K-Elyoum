@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.Home.View;
 
 import android.app.ProgressDialog;
 import android.util.Log;
@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
+import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TodayPlannerAdapter extends RecyclerView.Adapter<TodayPlannerAdapter.ViewHolder> {
 
@@ -143,7 +146,7 @@ public static TodayPlannerAdapter getInstance(){
 
     @Override
     public int getItemCount() {
-        mealsWeekPlanner.size();
+       return mealsWeekPlanner.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
