@@ -114,7 +114,7 @@ public class homepageFragment extends Fragment implements homepageInterface {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable, 5000);
+                //sliderHandler.postDelayed(sliderRunnable, 5000);
             }
         });
     }
