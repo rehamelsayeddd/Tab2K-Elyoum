@@ -51,6 +51,7 @@
     <string name="my_saved_recipes">My Saved Meals</string>
     <string name="meals_filtered_by_ingredient">Meals filtered by ingredient</string>
     <string name="add_to_weekplan">Add to weekplan</string>
+    <string name="empty_at_first">Empty at first</string>
 
 
 

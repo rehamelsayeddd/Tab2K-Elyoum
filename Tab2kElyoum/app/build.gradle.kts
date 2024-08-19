@@ -97,5 +97,8 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
 
+    //for rounded items
+    implementation ("com.makeramen:roundedimageview:2.3.0")
+
 
 }

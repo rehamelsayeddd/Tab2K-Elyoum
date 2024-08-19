@@ -58,7 +58,7 @@ public class SignInFragment extends Fragment {
   firebaseAuth = FirebaseAuth.getInstance();
 
   // Initialize NetworkChecker with the context
-  networkChecker = NetworkChecker.getInstance(requireContext());
+  networkChecker = NetworkChecker.getInstance();
 
   // Configure Google Sign-In
   GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
