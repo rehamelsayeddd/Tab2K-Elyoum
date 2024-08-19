@@ -10,7 +10,7 @@ public class SignInPresenter {
 
     private InterfaceSignIn interfaceSignIn;
     private Context context;
-    private static final String TAG = "PresenterFirebaseFireau";
+    private static final String TAG = "PresenterFirebaseSignin";
     private RepoistryRemote repositoryRemote;
     private RepoistryLocal repositoryLocal;
 

@@ -82,39 +82,36 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-
-                            case R.id.homepageFragment:
-                                while (MainActivity.navController.popBackStack() == true) {
+                        if (item.getItemId() == R.id.homepageFragment) {
+                            while (MainActivity.navController.popBackStack()) {
+                            }
+                            Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.homepageFragment);
+                            return true;
+                        } else if (item.getItemId() == R.id.nav_search) {
+                            while (MainActivity.navController.popBackStack()) {
+                            }
+                            Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_search);
+                            return true;
+                        } else if (item.getItemId() == R.id.nav_favoriteMeal) {
+                            if (isLoginAsGuest) {
+                                Toast.makeText(MainActivity.this, R.string.access, Toast.LENGTH_SHORT).show();
+                                return false;
+                            } else {
+                                while (MainActivity.navController.popBackStack()) {
                                 }
-                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.homepageFragment);
+                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_favoriteMeal);
                                 return true;
-                            case R.id.nav_search:
-                                while (MainActivity.navController.popBackStack() == true) {
+                            }
+                        } else if (item.getItemId() == R.id.nav_weekPlanners) {
+                            if (isLoginAsGuest) {
+                                Toast.makeText(MainActivity.this, R.string.must_login, Toast.LENGTH_SHORT).show();
+                                return false;
+                            } else {
+                                while (MainActivity.navController.popBackStack()) {
                                 }
-                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_search);
+                                Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_weekPlanners);
                                 return true;
-                            case R.id.nav_favoriteMeal:
-                                if (isLoginAsGuest == true) {
-                                    Toast.makeText(MainActivity.this, R.string.access, Toast.LENGTH_SHORT).show();
-                                    return false;
-                                } else {
-                                    while (MainActivity.navController.popBackStack() == true) {
-                                    }
-                                    Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_favoriteMeal);
-                                    return true;
-                                }
-
-                            case R.id.nav_weekPlanners:
-                                if (isLoginAsGuest == true) {
-                                    Toast.makeText(MainActivity.this, R.string.must_login, Toast.LENGTH_SHORT).show();
-                                    return false;
-                                } else {
-                                    while (MainActivity.navController.popBackStack() == true) {
-                                    }
-                                    Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_weekPlanners);
-                                    return true;
-                                }
+                            }
                         }
                         return false;
                     }

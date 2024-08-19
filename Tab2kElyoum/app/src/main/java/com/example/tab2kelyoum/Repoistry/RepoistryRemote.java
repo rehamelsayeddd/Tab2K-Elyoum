@@ -17,7 +17,7 @@ import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificArea;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificCategory;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificIngredient;
-import com.example.tab2kelyoum.InterfaceRegister;
+import com.example.tab2kelyoum.Register.Presenter.InterfaceRegister;
 import com.example.tab2kelyoum.SignIn.Presenter.InterfaceSignIn;
 import com.example.tab2kelyoum.Model.EachAreaModel;
 import com.example.tab2kelyoum.Model.EachCategoryModel;
