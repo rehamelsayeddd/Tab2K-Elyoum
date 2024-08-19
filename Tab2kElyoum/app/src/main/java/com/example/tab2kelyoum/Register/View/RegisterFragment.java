@@ -94,18 +94,9 @@ public class RegisterFragment extends Fragment implements InterfaceRegister {
                             Toast.makeText(getContext(), "Password not identical", Toast.LENGTH_SHORT).show();
 
                         }
-
                     }
-
                 }
-
-
-
-
-
             }
-
-
         });
     }
 
@@ -135,10 +126,7 @@ public class RegisterFragment extends Fragment implements InterfaceRegister {
                 } else {
                     Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
-
-
         }
     }
 }
