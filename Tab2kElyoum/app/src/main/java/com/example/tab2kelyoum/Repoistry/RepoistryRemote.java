@@ -17,6 +17,7 @@ import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificArea;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificCategory;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificIngredient;
+import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Register.Presenter.InterfaceRegister;
 import com.example.tab2kelyoum.SignIn.Presenter.InterfaceSignIn;
 import com.example.tab2kelyoum.Model.EachAreaModel;
@@ -315,21 +316,21 @@ public class RepoistryRemote {
 
         }
 
-        public void signInGoogle() {
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken("client_id")
-                    .requestEmail()
-                    .build();
-            GoogleSignInClient gsc = GoogleSignIn.getClient(context, gso);
+    public void signInGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.client_id)) // Fetch client ID from resources
+                .requestEmail()
+                .build();
+        GoogleSignInClient gsc = GoogleSignIn.getClient(context, gso);
+
+        Intent signInIntent = gsc.getSignInIntent();
+
+        // Assuming interfaceSignIn is a valid instance of a class implementing the appropriate interface
+        interfaceSignIn.onCompleteSignInIntent(signInIntent, 1000); // Ensure this method is correctly implemented
+    }
 
 
-            Intent signInIntent = gsc.getSignInIntent();
-
-
-            interfaceSignIn.onCompleteSignInIntent(signInIntent, 1000);
-        }
-
-        public void respondToActivityResultOfGoogleSignIn(int requestCode, int resultCode, Intent data) {
+    public void respondToActivityResultOfGoogleSignIn(int requestCode, int resultCode, Intent data) {
             if (requestCode == 1000) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
