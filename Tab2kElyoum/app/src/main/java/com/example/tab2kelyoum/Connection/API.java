@@ -1,6 +1,6 @@
 package com.example.tab2kelyoum.Connection;
 
-import com.example.tab2kelyoum.Model.RootAreasList;
+import com.example.tab2kelyoum.SearchbyArea.Model.RootAreasList;
 import com.example.tab2kelyoum.Model.RootCategoriesList;
 import com.example.tab2kelyoum.Model.RootIngredientsList;
 import com.example.tab2kelyoum.Model.RootMeal;

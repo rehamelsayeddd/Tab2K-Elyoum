@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.Model;
+package com.example.tab2kelyoum.SearchbyArea.Model;
 
 import com.google.gson.annotations.SerializedName;
 

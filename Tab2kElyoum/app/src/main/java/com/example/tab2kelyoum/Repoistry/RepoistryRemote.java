@@ -9,22 +9,22 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.tab2kelyoum.Connection.RetrofitClient;
-import com.example.tab2kelyoum.InterfaceAllAreas;
+import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceAllAreas;
 import com.example.tab2kelyoum.InterfaceAllCategories;
 import com.example.tab2kelyoum.InterfaceAllIngredients;
 import com.example.tab2kelyoum.InterfaceAllMeals;
 import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
-import com.example.tab2kelyoum.InterfaceMealFromSpecificArea;
+import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceMealFromSpecificArea;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificCategory;
 import com.example.tab2kelyoum.InterfaceMealFromSpecificIngredient;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Register.Presenter.InterfaceRegister;
 import com.example.tab2kelyoum.SignIn.Presenter.InterfaceSignIn;
-import com.example.tab2kelyoum.Model.EachAreaModel;
+import com.example.tab2kelyoum.SearchbyArea.Model.EachAreaModel;
 import com.example.tab2kelyoum.Model.EachCategoryModel;
 import com.example.tab2kelyoum.Model.EachIngredientModel;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.Model.RootAreasList;
+import com.example.tab2kelyoum.SearchbyArea.Model.RootAreasList;
 import com.example.tab2kelyoum.Model.RootCategoriesList;
 import com.example.tab2kelyoum.Model.RootIngredientsList;
 import com.example.tab2kelyoum.Model.RootMeal;
@@ -169,7 +169,7 @@ public class RepoistryRemote {
             }) ;
         }
 
-        public void getAllAreas() {
+        public void getAreas() {
             Observable<RootAreasList> observableAreas = retrofitClient.getMyApi().getRootAreasList();
             observableAreas.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     response -> {
@@ -186,7 +186,7 @@ public class RepoistryRemote {
         }
 
 
-        public void getMealFromSpecificArea(String areaSelected) {
+        public void getMealFromSpecificCountry(String areaSelected) {
         retrofitClient.getMyApi()
                 .getMealsOfSelectedArea(areaSelected)
                 .subscribeOn(Schedulers.io())
