@@ -11,42 +11,34 @@ import android.net.NetworkInfo;
  */
 public class NetworkChecker {
 
-    // Singleton instance of NetworkChecker
-    private static NetworkChecker instance = null;
+    private static Context context;
+    public static NetworkChecker instance = null;
 
-    // ConnectivityManager to check network state
-    private ConnectivityManager connectivityManager;
+    private NetworkChecker() {
 
-
-    private NetworkChecker(Context context) {
-        // Initialize the ConnectivityManager only if the context is not null
-        if (context != null) {
-            this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        }
     }
 
-    /**
-     * Provides a global point of access to the NetworkChecker instance.
-     * It initializes the instance if it hasn't been created yet.
-     */
-    public static NetworkChecker getInstance(Context context) {
+    public static NetworkChecker getInstance(Context contextInput) {
         if (instance == null) {
-            // Create a new instance if it doesn't exist, using the provided context
-            instance = new NetworkChecker(context);
+            context = contextInput;
+            instance = new NetworkChecker();
+        }
+        return instance;
+    }
+
+    public static NetworkChecker getInstance() {
+        if (instance == null) {
+            instance = new NetworkChecker();
         }
         return instance;
     }
 
 
-    /**
-     * Checks if the device is currently connected to the internet.
-     * return True if the device is connected to the internet, false otherwise.
-     */
-    public boolean checkIfInternetIsConnected() {
-        // Retrieve the active network information
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        // Return true if the device is connected to the internet, false otherwise
-        return networkInfo != null && networkInfo.isConnected();
+    public Boolean checkIfInternetIsConnected() {
+        return ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED));
     }
+
 }
