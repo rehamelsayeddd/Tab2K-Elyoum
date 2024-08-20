@@ -124,4 +124,9 @@
         android:name="com.example.tab2kelyoum.SearchbyArea.mealByCountryFragment"
         android:label="fragment_meal_by_country"
         tools:layout="@layout/fragment_meal_by_country" />
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.example.tab2kelyoum.MealDetailsFragment"
+        android:label="fragment_meal_details"
+        tools:layout="@layout/fragment_meal_details" />
 </navigation>

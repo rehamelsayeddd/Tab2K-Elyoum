@@ -56,6 +56,13 @@
     <string name="backInternet">Back Internet!</string>
     <string name="deleteAcount">Delete Account!</string>
     <string name="meals_by_areas">Meals by areas</string>
+    <string name="add_to_week_plan">Add to week planner</string>
+    <string name="steps">Here is the steps</string>
+    <string name="ingredient">Ingredients</string>
+    <string name="btn_addToCalendar">Add to calender</string>
+
+
+
 
 
 </resources>

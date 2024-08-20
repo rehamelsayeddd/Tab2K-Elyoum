@@ -102,4 +102,7 @@ dependencies {
     implementation ("com.makeramen:roundedimageview:2.3.0")
 
 
+    //Display video
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+
 }
