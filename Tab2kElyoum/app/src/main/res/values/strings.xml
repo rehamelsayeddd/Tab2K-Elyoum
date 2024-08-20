@@ -55,14 +55,7 @@
     <string name="noInternet">No Internet!</string>
     <string name="backInternet">Back Internet!</string>
     <string name="deleteAcount">Delete Account!</string>
-
-
-
-
-
-
-
-
+    <string name="meals_by_areas">Meals by areas</string>
 
 
 </resources>

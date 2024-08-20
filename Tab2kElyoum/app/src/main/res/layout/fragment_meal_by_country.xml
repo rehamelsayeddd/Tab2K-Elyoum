@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+
 android:layout_marginTop="60dp"
-tools:context=".SearchbyArea.searchBYCountryFragment">
+tools:context=".mealByCountryFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -15,16 +17,16 @@ tools:context=".SearchbyArea.searchBYCountryFragment">
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="@string/search_by_area"
+        android:hint="@string/search_for_a_meal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tinput_search"
+            android:id="@+id/textInput_Meal_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#56FFC107" />
+            android:backgroundTint="#4DC4C4C4" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -32,7 +34,7 @@ tools:context=".SearchbyArea.searchBYCountryFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/areas"
+        android:text="@string/meals_by_areas"
         android:textColor="#FF9800"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -42,15 +44,15 @@ tools:context=".SearchbyArea.searchBYCountryFragment">
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_country"
+        android:id="@+id/rv_MealByArea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_areaSelected"
-        tools:listitem="@layout/country_item" />
+        tools:listitem="@layout/search_meal_items_all" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
