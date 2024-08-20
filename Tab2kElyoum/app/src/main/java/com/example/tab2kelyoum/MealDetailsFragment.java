@@ -3,10 +3,12 @@ package com.example.tab2kelyoum;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.navigation.Navigation;
@@ -63,7 +65,7 @@ public class MealDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<String> ingrediant = new ArrayList<>();
     private List<String> megure = new ArrayList<>();
-    private MealDetailIngrediantAdapter mealDeatailIngrediantAdapter;
+    private MealDetailIngrediantAdapter mealDetailIngrediantAdapter;
     private String[] split;
     private Boolean youtubeURLisExists = false;
     private ImageButton btn_addToFavorites_meal_details;
@@ -157,8 +159,8 @@ public class MealDetailsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        mealDeatailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
-        recyclerView.setAdapter(mealDeatailIngrediantAdapter);
+        mealDetailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
+        recyclerView.setAdapter(mealDetailIngrediantAdapter);
 
         if (MainActivity.isLoginAsGuest == false) {
             btn_addToFavorites_meal_details.setOnClickListener(new View.OnClickListener() {
@@ -440,7 +442,7 @@ public class MealDetailsFragment extends Fragment {
                                                                MainActivity.mainActivity.runOnUiThread(new Runnable() {
                                                                    @Override
                                                                    public void run() {
-                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to be able to remove meals from your week plan.", Toast.LENGTH_SHORT).show();
+                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to remove meals from your week plan.", Toast.LENGTH_SHORT).show();
                                                                    }
                                                                });
 
@@ -454,6 +456,7 @@ public class MealDetailsFragment extends Fragment {
                                                                FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItemSelected.documentID)
                                                                        .delete()
                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                           @RequiresApi(api = Build.VERSION_CODES.O)
                                                                            @Override
                                                                            public void onSuccess(Void aVoid) {
                                                                                progressDialog.dismiss();
@@ -522,6 +525,7 @@ public class MealDetailsFragment extends Fragment {
         FirebaseFirestore.getInstance().collection("userWeekPlan")
                 .add(userWeekPlan)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
