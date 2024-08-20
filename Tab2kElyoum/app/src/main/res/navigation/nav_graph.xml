@@ -123,7 +123,11 @@
         android:id="@+id/mealByCountryFragment"
         android:name="com.example.tab2kelyoum.SearchbyArea.mealByCountryFragment"
         android:label="fragment_meal_by_country"
-        tools:layout="@layout/fragment_meal_by_country" />
+        tools:layout="@layout/fragment_meal_by_country" >
+        <action
+            android:id="@+id/action_mealByCountryFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
         android:name="com.example.tab2kelyoum.MealDetailsFragment"
