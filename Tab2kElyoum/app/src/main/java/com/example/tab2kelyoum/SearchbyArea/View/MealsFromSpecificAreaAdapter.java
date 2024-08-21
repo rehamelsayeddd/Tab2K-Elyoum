@@ -1,10 +1,9 @@
-package com.example.tab2kelyoum.SearchbyArea;
-
-import static java.lang.reflect.Array.get;
+package com.example.tab2kelyoum.SearchbyArea.View;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +52,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdapter.MyViewHolder> {
+public class MealsFromSpecificAreaAdapter extends RecyclerView.Adapter<MealsFromSpecificAreaAdapter.MyViewHolder> {
 
     private List<MealsItem> meals;
     private ViewGroup viewGroupOfMeal;
@@ -65,20 +65,20 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
     private RepoistryLocal rep;
     private MealsItem mealsItemSelectedFull;
 
-    public mealByCountryAdapter(List<MealsItem> meals) {
+    public MealsFromSpecificAreaAdapter(List<MealsItem> meals) {
         this.meals = meals;
     }
 
     @NonNull
     @Override
-    public mealByCountryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         viewGroupOfMeal = parent;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_meal_items_areas, parent, false);
-        return new mealByCountryAdapter.MyViewHolder(view);
+        return new MealsFromSpecificAreaAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull mealByCountryAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(holder.itemView).load(meals.get(position).getStrMealThumb()).into(holder.mealImage);
         holder.mealName.setText(meals.get(position).getStrMeal());
 
@@ -108,8 +108,8 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
 
                                 @Override
                                 public void onNext(@io.reactivex.rxjava3.annotations.NonNull RootMeal rootMeal) {
-                                    mealByCountryFragment.searchTextInput.setText("");
-                                   // Navigation.findNavController(viewGroupOfMeal).navigate(MealsFromSpecificAreaDirections.actionMealByCountryFragmentToMealDeatailsFragment(rootMeal.getMeals().get(0)));
+                                    MealsFromSpecificArea.searchTextInput.setText("");
+                                    Navigation.findNavController(viewGroupOfMeal).navigate(MealsFromSpecificAreaDirections.actionMealByCountryFragmentToMealDetailsFragment(rootMeal.getMeals().get(0)));
                                 }
 
                                 @Override
@@ -192,6 +192,8 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
         }
 
 
+
+
     }
 
 
@@ -200,7 +202,7 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
         return meals.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mealName;
         CircleImageView mealImage;
         ImageButton btn_addToFavorites;
@@ -222,6 +224,7 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
             autoCompleteTextView.setAdapter(arrayAdapter);
         }
     }
+
     private void checkIfItemAlreadyExistsInFavoritesOfFirestore(MealsItem mealsItemSelected) {
         isAlreadyInFavorites = false;
         FirebaseFirestore.getInstance().collection("userFavorites")
@@ -414,6 +417,7 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
                                                                FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItemSelected.documentID)
                                                                        .delete()
                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                           @RequiresApi(api = Build.VERSION_CODES.O)
                                                                            @Override
                                                                            public void onSuccess(Void aVoid) {
                                                                                progressDialog.dismiss();
@@ -482,6 +486,7 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
         FirebaseFirestore.getInstance().collection("userWeekPlan")
                 .add(userWeekPlan)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
@@ -509,5 +514,3 @@ public class mealByCountryAdapter extends RecyclerView.Adapter<mealByCountryAdap
     }
 
 }
-
-

@@ -1,18 +1,17 @@
-package com.example.tab2kelyoum.SearchbyArea;
+package com.example.tab2kelyoum.SearchbyArea.View;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.tab2kelyoum.NetworkChecker;
 import com.example.tab2kelyoum.R;
@@ -25,9 +24,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class searchBYCountryFragment extends Fragment implements InterfaceAllAreas {
+public class AllAreas extends Fragment implements InterfaceAllAreas {
     private List<EachAreaModel> areas;
-    private AreasAdapter areasAdapter;
+    private AllAreasAdapter areasAdapter;
     private RecyclerView recyclerView;
     public static TextInputEditText textInputEditText;
     private AllAreasPresenter allAreasPresenter;
@@ -58,7 +57,7 @@ public class searchBYCountryFragment extends Fragment implements InterfaceAllAre
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                areasAdapter  = new AreasAdapter(areas.stream().filter(EachAreaModel -> EachAreaModel.getStrArea().toLowerCase().startsWith(charSequence.toString().toLowerCase())).collect(Collectors.toList()));
+                areasAdapter  = new AllAreasAdapter(areas.stream().filter(EachAreaModel -> EachAreaModel.getStrArea().toLowerCase().startsWith(charSequence.toString().toLowerCase())).collect(Collectors.toList()));
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 recyclerView.setLayoutManager(linearLayoutManager);
@@ -76,7 +75,7 @@ public class searchBYCountryFragment extends Fragment implements InterfaceAllAre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_b_y_country, container, false);
+        return inflater.inflate(R.layout.fragment_search_by_country, container, false);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class searchBYCountryFragment extends Fragment implements InterfaceAllAre
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        areasAdapter = new AreasAdapter(areas);
+        areasAdapter = new AllAreasAdapter(areas);
         recyclerView.setAdapter(areasAdapter);
 
     }

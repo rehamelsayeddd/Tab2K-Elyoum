@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -367,6 +369,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                                                                FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItemSelected.documentID)
                                                                        .delete()
                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                           @RequiresApi(api = Build.VERSION_CODES.O)
                                                                            @Override
                                                                            public void onSuccess(Void aVoid) {
                                                                                progressDialog.dismiss();
@@ -435,6 +438,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         FirebaseFirestore.getInstance().collection("userWeekPlan")
                 .add(userWeekPlan)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());

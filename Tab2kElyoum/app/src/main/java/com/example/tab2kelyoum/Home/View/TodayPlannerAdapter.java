@@ -35,7 +35,7 @@ private ViewGroup viewGroup;
 private static final String Tag = "TodayPlannerAdapter";
 private ProgressDialog progressdialog;
 private RepoistryLocal repoistryLocal;
-public static TodayPlannerAdapter InstanceMeals;
+public static TodayPlannerAdapter InstanceProvidingMeals;
 private List<MealsItem> mealsWeekPlanner = new ArrayList<>();
 
 
@@ -44,13 +44,13 @@ private TodayPlannerAdapter (List<MealsItem> mealsWeekPlanner){
 }
 
 public static TodayPlannerAdapter getInstanceMeals (List<MealsItem> mealsWeekPlanner){
-    if (InstanceMeals == null) {
-        InstanceMeals = new TodayPlannerAdapter(mealsWeekPlanner);
+    if (InstanceProvidingMeals == null) {
+        InstanceProvidingMeals = new TodayPlannerAdapter(mealsWeekPlanner);
     }
-    return InstanceMeals;
+    return InstanceProvidingMeals;
 }
 public static TodayPlannerAdapter getInstance(){
-    return InstanceMeals;
+    return InstanceProvidingMeals;
 }
 
     @NonNull

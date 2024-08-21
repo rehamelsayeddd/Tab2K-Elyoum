@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
     }
 
     private void drawerLogOut() {
-        TodayPlannerAdapter.InstanceMeals = null;
+        TodayPlannerAdapter.InstanceProvidingMeals = null;
         FirebaseAuth.getInstance().signOut();
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
 
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
 
     @Override
     public void onFinishedDeletingAccount() {
-        TodayPlannerAdapter.InstanceMeals = null;
+        TodayPlannerAdapter.InstanceProvidingMeals = null;
         mainActivityPresenter = new MainActivityPresenter((Context) this);
         mainActivityPresenter.deleteTableRoom();
 

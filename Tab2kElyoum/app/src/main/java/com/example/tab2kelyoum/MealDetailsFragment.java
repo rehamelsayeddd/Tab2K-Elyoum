@@ -5,16 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +16,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tab2kelyoum.Connection.RetrofitClient;
@@ -58,14 +56,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class MealDetailsFragment extends Fragment {
-
     private TextView mealName, area, instructions;
     private ImageView mealImage;
     private YouTubePlayerView videoView;
     private RecyclerView recyclerView;
     private List<String> ingrediant = new ArrayList<>();
     private List<String> megure = new ArrayList<>();
-    private MealDetailIngrediantAdapter mealDetailIngrediantAdapter;
+    private MealDetailIngrediantAdapter mealDeatailIngrediantAdapter;
     private String[] split;
     private Boolean youtubeURLisExists = false;
     private ImageButton btn_addToFavorites_meal_details;
@@ -86,7 +83,7 @@ public class MealDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
+       mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
 
         mealName = view.findViewById(R.id.tv_mealName);
         area = view.findViewById(R.id.tv_meal_area);
@@ -159,8 +156,8 @@ public class MealDetailsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        mealDetailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
-        recyclerView.setAdapter(mealDetailIngrediantAdapter);
+        mealDeatailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
+        recyclerView.setAdapter(mealDeatailIngrediantAdapter);
 
         if (MainActivity.isLoginAsGuest == false) {
             btn_addToFavorites_meal_details.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +225,7 @@ public class MealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
+                //   Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
 
 
             }
@@ -442,7 +439,7 @@ public class MealDetailsFragment extends Fragment {
                                                                MainActivity.mainActivity.runOnUiThread(new Runnable() {
                                                                    @Override
                                                                    public void run() {
-                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to remove meals from your week plan.", Toast.LENGTH_SHORT).show();
+                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to be able to remove meals from your week plan.", Toast.LENGTH_SHORT).show();
                                                                    }
                                                                });
 

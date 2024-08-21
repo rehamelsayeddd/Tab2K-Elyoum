@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.example.tab2kelyoum.nav_search"
+        android:name="com.example.tab2kelyoum.SearchFragment"
         android:label="fragment_nav_search"
         tools:layout="@layout/fragment_nav_search" >
         <action
@@ -110,9 +110,9 @@
 
     <fragment
         android:id="@+id/searchBYCountryFragment"
-        android:name="com.example.tab2kelyoum.SearchbyArea.searchBYCountryFragment"
+        android:name="com.example.tab2kelyoum.SearchbyArea.View.AllAreas"
         android:label="fragment_search_b_y_country"
-        tools:layout="@layout/fragment_search_b_y_country" >
+        tools:layout="@layout/fragment_search_by_country" >
         <action
             android:id="@+id/action_searchBYCountryFragment_to_mealByCountryFragment"
             app:destination="@id/mealByCountryFragment">
@@ -148,7 +148,7 @@
 
     <fragment
         android:id="@+id/mealByCountryFragment"
-        android:name="com.example.tab2kelyoum.SearchbyArea.mealByCountryFragment"
+        android:name="com.example.tab2kelyoum.SearchbyArea.View.MealsFromSpecificArea"
         android:label="fragment_meal_by_country"
         tools:layout="@layout/fragment_meal_by_country" >
         <argument

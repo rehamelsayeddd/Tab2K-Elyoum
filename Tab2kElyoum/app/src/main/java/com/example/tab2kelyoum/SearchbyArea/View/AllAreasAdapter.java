@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.SearchbyArea;
+package com.example.tab2kelyoum.SearchbyArea.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,26 +20,26 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.MyViewHolder> {
+public class AllAreasAdapter extends RecyclerView.Adapter<AllAreasAdapter.MyViewHolder> {
 
     private ViewGroup countryV;
     private List<EachAreaModel> countries;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
 
-    public AreasAdapter(List<EachAreaModel> countries) {
+    public AllAreasAdapter(List<EachAreaModel> countries) {
         this.countries = countries;
     }
 
     @NonNull
     @Override
-    public AreasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AllAreasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        countryV = parent;
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_item , parent , false);
        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AreasAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AllAreasAdapter.MyViewHolder holder, int position) {
        EachAreaModel eachAreaModel = countries.get(position);
        holder.country.setText(eachAreaModel.getStrArea());
        String area = eachAreaModel.getStrArea();
@@ -93,7 +93,7 @@ public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.MyViewHolder
                     Toast.makeText(MainActivity.mainActivity, "Turn internet on to view meals related to this area.", Toast.LENGTH_SHORT).show();
                 } else {
                     // Clear text input and navigate to the new fragment
-                    searchBYCountryFragment.textInputEditText.setText("");
+                    AllAreas.textInputEditText.setText("");
 
                     Bundle bundle = new Bundle();
                     bundle.putString("country", countries.get(position).getStrArea());

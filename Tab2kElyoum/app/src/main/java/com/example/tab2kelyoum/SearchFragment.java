@@ -1,6 +1,10 @@
 package com.example.tab2kelyoum;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,15 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 
 
-public class nav_search extends Fragment {
+public class SearchFragment extends Fragment {
 
 
     private CardView searchByCountry, searchByCategory, searchIngrediant, searchByAllMeals;
