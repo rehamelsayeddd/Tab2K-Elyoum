@@ -7,9 +7,8 @@ import androidx.room.Entity;
 import java.io.Serializable;
 
 @Entity(tableName = "MealsItem", primaryKeys = {"strMeal", "weekDay"})
+public class MealsItem implements Serializable {
 
-public class MealsItem implements Serializable { //Serializable to pass data by safe args between the fragments
-// creating model for database to be fetched
     public String documentID;
     private String currentUserEmail;
     @NonNull
@@ -387,7 +386,5 @@ public class MealsItem implements Serializable { //Serializable to pass data by 
         this.strMeasure15 = strMeasure15;
     }
 }
-
-
 
 

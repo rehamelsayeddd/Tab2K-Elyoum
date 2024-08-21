@@ -30,12 +30,12 @@ import java.util.List;
 
 public class homepageFragment extends Fragment implements homepageInterface {
 
-    private static final String TAG = "DailyInspirations";
+    private static final String TAG = "Homepage";
 
 
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
-    private com.example.tab2kelyoum.Home.Presenter.homePresenter homePresenter;
+    private homePresenter homePresenter;
     private RecyclerView recyclerViewPlanToday;
     private TodayPlannerAdapter todayPlannerAdapter;
     private List<MealsItem> allSavedMeals = new ArrayList<>();

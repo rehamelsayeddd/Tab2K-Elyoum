@@ -86,7 +86,7 @@ public class MealDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //  mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
+        mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
 
         mealName = view.findViewById(R.id.tv_mealName);
         area = view.findViewById(R.id.tv_meal_area);

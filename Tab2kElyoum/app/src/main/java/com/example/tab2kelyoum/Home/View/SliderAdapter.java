@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -97,7 +98,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             @Override
             public void onClick(View view) {
 
-              //  Navigation.findNavController(viewGroupOfMeal).navigate(DailyInspirationsDirections.actionNavHomeToMealDeatailsFragment(meals.get(position)));
+                Navigation.findNavController(view).navigate(R.id.action_homepageFragment_to_mealDetailsFragment);
 
             }
         });

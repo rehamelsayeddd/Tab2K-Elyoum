@@ -60,8 +60,7 @@
     <string name="steps">Here is the steps</string>
     <string name="ingredient">Ingredients</string>
     <string name="btn_addToCalendar">Add to calender</string>
-
-
+    <string name="meals_filtered_by_category">Meals filtered by category</string>
 
 
 

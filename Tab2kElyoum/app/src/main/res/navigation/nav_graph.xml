@@ -43,7 +43,11 @@
         android:id="@+id/homepageFragment"
         android:name="com.example.tab2kelyoum.Home.View.homepageFragment"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" />
+        tools:layout="@layout/fragment_homepage" >
+        <action
+            android:id="@+id/action_homepageFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_search"
@@ -68,19 +72,31 @@
         android:id="@+id/nav_favoriteMeal"
         android:name="com.example.tab2kelyoum.nav_favoriteMeal"
         android:label="fragment_nav_favorite_meal"
-        tools:layout="@layout/fragment_nav_favorite_meal" />
+        tools:layout="@layout/fragment_nav_favorite_meal" >
+        <action
+            android:id="@+id/action_nav_favoriteMeal_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_weekPlanners"
         android:name="com.example.tab2kelyoum.nav_weekPlanners"
         android:label="fragment_nav_week_planners"
-        tools:layout="@layout/fragment_nav_week_planners" />
+        tools:layout="@layout/fragment_nav_week_planners" >
+        <action
+            android:id="@+id/action_nav_weekPlanners_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchByAllMealsFragment"
         android:name="com.example.tab2kelyoum.searchByAllMealsFragment"
         android:label="fragment_search_by_all_meals"
-        tools:layout="@layout/fragment_search_by_all_meals" />
+        tools:layout="@layout/fragment_search_by_all_meals" >
+        <action
+            android:id="@+id/action_searchByAllMealsFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchByIngrdiantFragment"
@@ -111,19 +127,33 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.tab2kelyoum.categoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_mealByCategoryFragment"
+            app:destination="@id/mealByCategoryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealByIngrediantFragment"
         android:name="com.example.tab2kelyoum.mealByIngrediantFragment"
         android:label="fragment_meal_by_ingrediant"
-        tools:layout="@layout/fragment_meal_by_ingrediant" />
+        tools:layout="@layout/fragment_meal_by_ingrediant" >
+        <argument
+            android:name="Ingradiant"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealByIngrediantFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealByCountryFragment"
         android:name="com.example.tab2kelyoum.SearchbyArea.mealByCountryFragment"
         android:label="fragment_meal_by_country"
         tools:layout="@layout/fragment_meal_by_country" >
+        <argument
+            android:name="area"
+            app:argType="string" />
         <action
             android:id="@+id/action_mealByCountryFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
@@ -132,5 +162,25 @@
         android:id="@+id/mealDetailsFragment"
         android:name="com.example.tab2kelyoum.MealDetailsFragment"
         android:label="fragment_meal_details"
-        tools:layout="@layout/fragment_meal_details" />
+        tools:layout="@layout/fragment_meal_details">
+
+        <!-- Define the argument -->
+        <argument
+            android:name="mealDetailsArgs"
+            app:argType="com.example.tab2kelyoum.Model.MealsItem" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mealByCategoryFragment"
+        android:name="com.example.tab2kelyoum.mealByCategoryFragment"
+        android:label="fragment_meal_by_category"
+        tools:layout="@layout/fragment_meal_by_category" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealByCategoryFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
 </navigation>

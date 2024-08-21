@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+import  com. example. tab2kelyoum. Home. View. homepageFragmentDirections;
 
 import com.bumptech.glide.Glide;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
@@ -136,8 +138,7 @@ public static TodayPlannerAdapter getInstance(){
             public void onClick(View view) {
 
 
-            //    Navigation.findNavController(viewGroup).navigate(DailyInspirationsDirections.actionNavHomeToMealDeatailsFragment(mealsWeekPlanner.get(position)));
-
+           Navigation.findNavController(viewGroup).navigate(homepageFragmentDirections.actionHomepageFragmentToMealDetailsFragment(mealsWeekPlanner.get(position)));
 
             }
         });
