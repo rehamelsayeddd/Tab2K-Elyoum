@@ -9,25 +9,26 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.tab2kelyoum.Connection.RetrofitClient;
-import com.example.tab2kelyoum.InterfaceAllAreas;
-import com.example.tab2kelyoum.InterfaceAllCategories;
-import com.example.tab2kelyoum.InterfaceAllIngredients;
-import com.example.tab2kelyoum.InterfaceAllMeals;
+import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceAllAreas;
+import com.example.tab2kelyoum.SearchByCategory.Presenter.InterfaceAllCategories;
+import com.example.tab2kelyoum.SearchByIngredient.Presenter.InterfaceAllIngredients;
+import com.example.tab2kelyoum.SearchbyMeal.Presenter.InterfaceAllMeals;
 import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
-import com.example.tab2kelyoum.InterfaceMealFromSpecificArea;
-import com.example.tab2kelyoum.InterfaceMealFromSpecificCategory;
-import com.example.tab2kelyoum.InterfaceMealFromSpecificIngredient;
+import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceMealFromSpecificArea;
+import com.example.tab2kelyoum.SearchByCategory.Presenter.InterfaceMealFromSpecificCategory;
+import com.example.tab2kelyoum.SearchByIngredient.Presenter.InterfaceMealFromSpecificIngredient;
+import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Register.Presenter.InterfaceRegister;
 import com.example.tab2kelyoum.SignIn.Presenter.InterfaceSignIn;
-import com.example.tab2kelyoum.Model.EachAreaModel;
-import com.example.tab2kelyoum.Model.EachCategoryModel;
-import com.example.tab2kelyoum.Model.EachIngredientModel;
+import com.example.tab2kelyoum.SearchbyArea.Model.EachAreaModel;
+import com.example.tab2kelyoum.SearchByCategory.Model.EachCategoryModel;
+import com.example.tab2kelyoum.SearchByIngredient.Model.EachIngredientModel;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.Model.RootAreasList;
-import com.example.tab2kelyoum.Model.RootCategoriesList;
-import com.example.tab2kelyoum.Model.RootIngredientsList;
+import com.example.tab2kelyoum.SearchbyArea.Model.RootAreasList;
+import com.example.tab2kelyoum.SearchByCategory.Model.RootCategoriesList;
+import com.example.tab2kelyoum.SearchByIngredient.Model.RootIngredientsList;
 import com.example.tab2kelyoum.Model.RootMeal;
-import com.example.tab2kelyoum.Model.RootMealsFromSingleLetter;
+import com.example.tab2kelyoum.SearchbyMeal.Model.RootMealsFromSingleLetter;
 import com.example.tab2kelyoum.Home.Presenter.homepageInterface;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -168,7 +169,7 @@ public class RepoistryRemote {
             }) ;
         }
 
-        public void getAllAreas() {
+        public void getAreas() {
             Observable<RootAreasList> observableAreas = retrofitClient.getMyApi().getRootAreasList();
             observableAreas.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     response -> {
@@ -185,7 +186,7 @@ public class RepoistryRemote {
         }
 
 
-        public void getMealFromSpecificArea(String areaSelected) {
+        public void getMealFromSpecificCountry(String areaSelected) {
         retrofitClient.getMyApi()
                 .getMealsOfSelectedArea(areaSelected)
                 .subscribeOn(Schedulers.io())
@@ -315,21 +316,21 @@ public class RepoistryRemote {
 
         }
 
-        public void signInGoogle() {
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken("client_id")
-                    .requestEmail()
-                    .build();
-            GoogleSignInClient gsc = GoogleSignIn.getClient(context, gso);
+    public void signInGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.client_id)) // Fetch client ID from resources
+                .requestEmail()
+                .build();
+        GoogleSignInClient gsc = GoogleSignIn.getClient(context, gso);
+
+        Intent signInIntent = gsc.getSignInIntent();
+
+        // Assuming interfaceSignIn is a valid instance of a class implementing the appropriate interface
+        interfaceSignIn.onCompleteSignInIntent(signInIntent, 1000); // Ensure this method is correctly implemented
+    }
 
 
-            Intent signInIntent = gsc.getSignInIntent();
-
-
-            interfaceSignIn.onCompleteSignInIntent(signInIntent, 1000);
-        }
-
-        public void respondToActivityResultOfGoogleSignIn(int requestCode, int resultCode, Intent data) {
+    public void respondToActivityResultOfGoogleSignIn(int requestCode, int resultCode, Intent data) {
             if (requestCode == 1000) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 

@@ -22,16 +22,14 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
 public class RepoistryLocal {
-
     private static final String TAG = "Repository";
     private Context context;
     private MealDao mealDAO;
-    private Flowable<List<MealsItem>> storedMealsItems; // Observable list of stored meals items (rxjava)
+    private Flowable<List<MealsItem>> storedMealsItems;
     private List<MealsItem> mealsItemsFromFirestore = new ArrayList<>();
     private List<MealsItem> mealsWeekPlanSaturday = new ArrayList<>(), mealsWeekPlanSunday = new ArrayList<>(), mealsWeekPlanMonday = new ArrayList<>(), mealsWeekPlanTuesday = new ArrayList<>(), mealsWeekPlanWednesday = new ArrayList<>(), mealsWeekPlanThursday = new ArrayList<>(), mealsWeekPlanFriday = new ArrayList<>();
-    private homepageInterface homepageInterface; // Interface for responding to data loading events
+    private homepageInterface interfaceDailyInspirations;
 
-    // Constructor initializing Room database
     public RepoistryLocal(Context context) {
         this.context = context;
 
@@ -41,21 +39,21 @@ public class RepoistryLocal {
         storedMealsItems = mealDAO.getStoredMealsItems();
     }
 
-    // Constructor with InterfaceDailyInspirations for callback
-    public RepoistryLocal(homepageInterface homepageInterface, Context context) {
+    public RepoistryLocal(homepageInterface interfaceDailyInspirations, Context context) {
         this.context = context;
+
         DB db = DB.getInstance(context);
         mealDAO = db.mealDAO();
+
         storedMealsItems = mealDAO.getStoredMealsItems();
-        this.homepageInterface = homepageInterface; // Set callback interface
+
+        this.interfaceDailyInspirations = interfaceDailyInspirations;
     }
 
-    // Return Flowable of stored meals
     public Flowable<List<MealsItem>> returnStoredMealsItems() {
         return storedMealsItems;
     }
 
-    // Delete a meal from Room database
     public void delete(MealsItem mealsItem) {
         new Thread(new Runnable() {
             @Override
@@ -65,7 +63,6 @@ public class RepoistryLocal {
         }).start();
     }
 
-    // Insert a meal into Room database
     public void insert(MealsItem mealsItem, String weekDay, String documentID) {
         new Thread(new Runnable() {
             @Override
@@ -77,23 +74,21 @@ public class RepoistryLocal {
         }).start();
     }
 
-    // Find a meal by name and week day
     public MealsItem findMealByName(String mealName, String weekDayString) {
         return mealDAO.findMealByName(mealName, weekDayString);
     }
 
-    // Load data from Firestore and populate Room database
     public void loadRoomFromFirestore() {
         getFavoriteMealsUsingFirestore();
         getWeekPlanMealsUsingFirestore();
     }
 
-    // Delete all data from Room database
+
     public void deleteTableRoom() {
         mealDAO.deleteTableRoom();
     }
 
-    // Fetch favorite meals from Firestore and insert into Room database
+
     private void getFavoriteMealsUsingFirestore() {
         FirebaseFirestore.getInstance().collection("userFavorites")
                 .get()
@@ -102,30 +97,33 @@ public class RepoistryLocal {
                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                if (task.isSuccessful()) {
                                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                                       // Check if the current document belongs to the logged-in user
+
                                                        if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-                                                           // Create a MealsItem from the Firestore document
                                                            mealsItemsFromFirestore.add(new MealsItem(document.getId(),
-                                                                   document.get("strMeal").toString(),
-                                                                   document.get("strArea").toString(),
-                                                                   document.get("strMealThumb").toString(),
-                                                                   document.get("strInstructions").toString(),
-                                                                   document.get("strYoutube").toString(),
-                                                                   null
-                                                           ));
-                                                           // Insert the meal into Room database
-                                                           insert(mealsItemsFromFirestore.get(mealsItemsFromFirestore.size() - 1), "NULL", document.getId());
+                                                                           document.get("strMeal").toString(),
+                                                                           document.get("strArea").toString(),
+                                                                           document.get("strMealThumb").toString(),
+                                                                           document.get("strInstructions").toString(),
+                                                                           document.get("strYoutube").toString(),
+                                                                           null
+                                                                   )
+                                                           );
+                                                           insert(mealsItemsFromFirestore.get((mealsItemsFromFirestore.size() - 1)), "NULL", document.getId());
+
                                                        }
+
+
                                                    }
+
+
                                                } else {
-                                                   Log.i(TAG, "Error loading documents from Firestore to Room.", task.getException());
+                                                   Log.i(TAG, "Error loading documents from firestore to Room.", task.getException());
                                                }
                                            }
                                        }
                 );
     }
 
-    // Fetch week plan meals from Firestore and insert into Room database
     private void getWeekPlanMealsUsingFirestore() {
         FirebaseFirestore.getInstance().collection("userWeekPlan")
                 .get()
@@ -134,57 +132,40 @@ public class RepoistryLocal {
                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                if (task.isSuccessful()) {
                                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                                       // Check if the current document belongs to the logged-in user
-                                                       if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-                                                           String weekDay = document.get("weekDay").toString();
-                                                           MealsItem meal = new MealsItem(document.getId(),
-                                                                   document.get("strMeal").toString(),
-                                                                   document.get("strArea").toString(),
-                                                                   document.get("strMealThumb").toString(),
-                                                                   document.get("strInstructions").toString(),
-                                                                   document.get("strYoutube").toString(),
-                                                                   weekDay);
-                                                           // Add meal to the appropriate list based on the weekday
-                                                           switch (weekDay) {
-                                                               case "Saturday":
-                                                                   mealsWeekPlanSaturday.add(meal);
-                                                                   insert(meal, "Saturday", document.getId());
-                                                                   break;
-                                                               case "Sunday":
-                                                                   mealsWeekPlanSunday.add(meal);
-                                                                   insert(meal, "Sunday", document.getId());
-                                                                   break;
-                                                               case "Monday":
-                                                                   mealsWeekPlanMonday.add(meal);
-                                                                   insert(meal, "Monday", document.getId());
-                                                                   break;
-                                                               case "Tuesday":
-                                                                   mealsWeekPlanTuesday.add(meal);
-                                                                   insert(meal, "Tuesday", document.getId());
-                                                                   break;
-                                                               case "Wednesday":
-                                                                   mealsWeekPlanWednesday.add(meal);
-                                                                   insert(meal, "Wednesday", document.getId());
-                                                                   break;
-                                                               case "Thursday":
-                                                                   mealsWeekPlanThursday.add(meal);
-                                                                   insert(meal, "Thursday", document.getId());
-                                                                   break;
-                                                               case "Friday":
-                                                                   mealsWeekPlanFriday.add(meal);
-                                                                   insert(meal, "Friday", document.getId());
-                                                                   break;
-                                                           }
+
+                                                       if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Saturday")) {
+                                                           mealsWeekPlanSaturday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanSaturday.get((mealsWeekPlanSaturday.size() - 1)), "Saturday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Sunday")) {
+                                                           mealsWeekPlanSunday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanSunday.get((mealsWeekPlanSunday.size() - 1)), "Sunday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Monday")) {
+                                                           mealsWeekPlanMonday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanMonday.get((mealsWeekPlanMonday.size() - 1)), "Monday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Tuesday")) {
+                                                           mealsWeekPlanTuesday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanTuesday.get((mealsWeekPlanTuesday.size() - 1)), "Tuesday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Wednesday")) {
+                                                           mealsWeekPlanWednesday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanWednesday.get((mealsWeekPlanWednesday.size() - 1)), "Wednesday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Thursday")) {
+                                                           mealsWeekPlanThursday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanThursday.get((mealsWeekPlanThursday.size() - 1)), "Thursday", document.getId());
+                                                       } else if (document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").toString().equals("Friday")) {
+                                                           mealsWeekPlanFriday.add(new MealsItem(document.getId(), document.get("strMeal").toString(), document.get("strArea").toString(), document.get("strMealThumb").toString(), document.get("strInstructions").toString(), document.get("strYoutube").toString(), document.get("weekDay").toString()));
+                                                           insert(mealsWeekPlanFriday.get((mealsWeekPlanFriday.size() - 1)), "Friday", document.getId());
                                                        }
+
                                                    }
-                                                   // Notify the interface that data loading is complete
-                                                   homepageInterface.responseOfLoadingDataFromFirestoreToRoom();
+                                                   interfaceDailyInspirations.responseOfLoadingDataFromFirestoreToRoom();
                                                } else {
-                                                   Log.i(TAG, "Error loading documents from Firestore to Room.", task.getException());
+                                                   Log.i(TAG, "Error loading documents from firestore to Room.", task.getException());
                                                }
                                            }
                                        }
                 );
-    }
-}
 
+    }
+
+
+}

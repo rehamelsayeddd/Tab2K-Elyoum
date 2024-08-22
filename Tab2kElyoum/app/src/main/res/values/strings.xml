@@ -55,10 +55,19 @@
     <string name="noInternet">No Internet!</string>
     <string name="backInternet">Back Internet!</string>
     <string name="deleteAcount">Delete Account!</string>
-
-
-
-
+    <string name="meals_by_areas">Meals by areas</string>
+    <string name="add_to_week_plan">Add to week planner</string>
+    <string name="steps">Here is the steps</string>
+    <string name="ingredient">Ingredients</string>
+    <string name="btn_addToCalendar">Add to calender</string>
+    <string name="meals_filtered_by_category">Meals filtered by category</string>
+    <string name="deleteaccount">Delete Account</string>
+    <string name="needAcount">Need Account!</string>
+    <string name="WaitAreYouSure">Are you sure?</string>
+    <string name="DeleteAccount">Delete Account</string>
+    <string name="turnOnInternent">Turn on the Internet</string>
+    <string name="sure">Sure!</string>
+    <string name="keep">Keep!</string>
 
 
 

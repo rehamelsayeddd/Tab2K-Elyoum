@@ -1,13 +1,17 @@
 package com.example.tab2kelyoum.Home.View;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
@@ -35,7 +39,7 @@ public class homepageFragment extends Fragment implements homepageInterface {
 
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
-    private com.example.tab2kelyoum.Home.Presenter.homePresenter homePresenter;
+    private homePresenter homePresenter;
     private RecyclerView recyclerViewPlanToday;
     private TodayPlannerAdapter todayPlannerAdapter;
     private List<MealsItem> allSavedMeals = new ArrayList<>();
@@ -71,14 +75,14 @@ public class homepageFragment extends Fragment implements homepageInterface {
 
         homePresenter = new homePresenter(this, requireContext());
 
-        homePresenter.getDailyInspo();
+        homePresenter.getDailyInspirations();
 
         if (!MainActivity.isLoginAsGuest) {
-            homePresenter.loadFromfirestore();
+            homePresenter.loadRoomFromFirestore();
         }
 
         if (!MainActivity.isLoginAsGuest) {
-            homePresenter.loadTitle();
+            homePresenter.loadHeaderTitle();
         }
 
 
@@ -106,7 +110,17 @@ public class homepageFragment extends Fragment implements homepageInterface {
         viewPager2.setClipChildren(false);
         viewPager2.setOffscreenPageLimit(50);
         viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_IF_CONTENT_SCROLLS);
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.85f + r * 0.15f);
 
+            }
+        });
+        viewPager2.setPageTransformer(compositePageTransformer);
 
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -114,7 +128,7 @@ public class homepageFragment extends Fragment implements homepageInterface {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 sliderHandler.removeCallbacks(sliderRunnable);
-                //sliderHandler.postDelayed(sliderRunnable, 5000);
+                sliderHandler.postDelayed(sliderRunnable, 5000);
             }
         });
     }
@@ -126,11 +140,12 @@ public class homepageFragment extends Fragment implements homepageInterface {
 
     @Override
     public void responseOfLoadingDataFromFirestoreToRoom() {
-        allSavedMeals = homePresenter.returnStoredMeals().blockingFirst();
+        allSavedMeals = homePresenter.returnStoredMealsItems().blockingFirst();
 
         getMealsPlannedForToday();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getMealsPlannedForToday() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());

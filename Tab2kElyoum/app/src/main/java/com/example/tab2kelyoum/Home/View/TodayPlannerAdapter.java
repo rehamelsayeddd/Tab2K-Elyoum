@@ -11,12 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,7 +34,7 @@ private ViewGroup viewGroup;
 private static final String Tag = "TodayPlannerAdapter";
 private ProgressDialog progressdialog;
 private RepoistryLocal repoistryLocal;
-public static TodayPlannerAdapter InstanceMeals;
+public static TodayPlannerAdapter InstanceProvidingMeals;
 private List<MealsItem> mealsWeekPlanner = new ArrayList<>();
 
 
@@ -42,13 +43,13 @@ private TodayPlannerAdapter (List<MealsItem> mealsWeekPlanner){
 }
 
 public static TodayPlannerAdapter getInstanceMeals (List<MealsItem> mealsWeekPlanner){
-    if (InstanceMeals == null) {
-        InstanceMeals = new TodayPlannerAdapter(mealsWeekPlanner);
+    if (InstanceProvidingMeals == null) {
+        InstanceProvidingMeals = new TodayPlannerAdapter(mealsWeekPlanner);
     }
-    return InstanceMeals;
+    return InstanceProvidingMeals;
 }
 public static TodayPlannerAdapter getInstance(){
-    return InstanceMeals;
+    return InstanceProvidingMeals;
 }
 
     @NonNull
@@ -136,8 +137,9 @@ public static TodayPlannerAdapter getInstance(){
             public void onClick(View view) {
 
 
-            //    Navigation.findNavController(viewGroup).navigate(DailyInspirationsDirections.actionNavHomeToMealDeatailsFragment(mealsWeekPlanner.get(position)));
-
+           //Navigation.findNavController(viewGroup).navigate(homepageFragmentDirections.actionHomepageFragmentToMealDetailsFragment(mealsWeekPlanner.get(position)));
+                Navigation.findNavController(viewGroup)
+                        .navigate(R.id.action_homepageFragment_to_mealDetailsFragment);
 
             }
         });
@@ -158,10 +160,10 @@ public static TodayPlannerAdapter getInstance(){
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            week_plannerMealName = itemView.findViewById(R.id.week_plannerMealName);
-            week_plannerMealArea = itemView.findViewById(R.id.week_plannerMealArea);
-            week_planner_imgMealImg = itemView.findViewById(R.id.week_planner_imgMealImg);
-            removeWeekPlannerItembtn = itemView.findViewById(R.id.removeWeekPlannerItembtn);
+            week_plannerMealName = itemView.findViewById(R.id.week_planner_tv_mealName);
+            week_plannerMealArea = itemView.findViewById(R.id.week_planner_tv_mealArea);
+            week_planner_imgMealImg = itemView.findViewById(R.id.week_planner_img_mealImg);
+            removeWeekPlannerItembtn = itemView.findViewById(R.id.btn_removeWeekPlannerItem);
 
 
         }

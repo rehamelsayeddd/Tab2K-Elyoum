@@ -5,4 +5,7 @@
         android:id="@+id/drawerLogout"
         android:icon="@drawable/logout"
         android:title="@string/Logout" />
+    <item
+        android:id="@+id/drawerDeleteAcount"
+        android:title="@string/deleteaccount" />
 </menu>

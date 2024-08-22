@@ -19,7 +19,6 @@ public abstract class DB extends RoomDatabase {
 
     // Static method to get the singleton instance of the database
     public static synchronized DB getInstance(Context context) {
-        // Check if the instance is null
         if (instance == null) {
             // Create the database instance using Room's databaseBuilder
             instance = Room.databaseBuilder(context.getApplicationContext(),

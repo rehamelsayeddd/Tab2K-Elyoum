@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+
     id ("androidx.navigation.safeargs")
+    "androidx.navigation.safeargs"
 
 }
 
@@ -100,5 +102,8 @@ dependencies {
     //for rounded items
     implementation ("com.makeramen:roundedimageview:2.3.0")
 
+
+    //Display video
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
 
 }

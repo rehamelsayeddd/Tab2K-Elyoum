@@ -9,7 +9,7 @@
     android:layout_margin="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/week_planner_imgMealImg"
+        android:id="@+id/week_planner_img_mealImg"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_margin="20dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/week_plannerMealName"
+        android:id="@+id/week_planner_tv_mealName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/week_plannerMealArea"
+        android:id="@+id/week_planner_tv_mealArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/week_planner_tv_mealName" />
 
     <ImageButton
-        android:id="@+id/removeWeekPlannerItembtn"
+        android:id="@+id/btn_removeWeekPlannerItem"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="28dp"
@@ -53,7 +53,7 @@
         android:background="@drawable/circular"
         android:elevation="20dp"
         android:scaleType="center"
-        android:src="@drawable/heartremove"
+        android:src="@drawable/remove"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
