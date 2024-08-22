@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MealsFromSpecificArea extends Fragment implements InterfaceMealFromSpecificArea {
+
     private MealsFromSpecificAreaAdapter mealsFromSpecificAreaAdapter;
     private RecyclerView recyclerView;
     public static TextInputEditText searchTextInput;
@@ -34,6 +35,7 @@ public class MealsFromSpecificArea extends Fragment implements InterfaceMealFrom
     private TextView tv_areaSelected;
     private MealFromSpecificAreaPresenter presenterMealFromSpecificArea;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_MealByArea);
@@ -53,7 +55,6 @@ public class MealsFromSpecificArea extends Fragment implements InterfaceMealFrom
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
 
                 mealsFromSpecificAreaAdapter = new MealsFromSpecificAreaAdapter(mealsItemList.stream().filter(mealsItem -> mealsItem.getStrMeal().toLowerCase().contains(s.toString().toLowerCase())).collect(Collectors.toList()));
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());

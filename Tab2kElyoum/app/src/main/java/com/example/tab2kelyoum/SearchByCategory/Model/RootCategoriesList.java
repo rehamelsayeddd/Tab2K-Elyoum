@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.Model;
+package com.example.tab2kelyoum.SearchByCategory.Model;
 
 import java.util.List;
 

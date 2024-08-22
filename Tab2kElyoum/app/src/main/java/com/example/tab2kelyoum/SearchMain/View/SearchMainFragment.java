@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SearchMain.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,10 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
+import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.R;
 
 
-public class SearchFragment extends Fragment {
-
+public class SearchMainFragment extends Fragment {
 
     private CardView searchByCountry, searchByCategory, searchIngrediant, searchByAllMeals;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
@@ -68,11 +69,7 @@ public class SearchFragment extends Fragment {
                     });
 
                 } else if (networkChecker.checkIfInternetIsConnected()) {
-                    // Create a Bundle if needed to pass any arguments, or leave it null if not
-                    Bundle bundle = new Bundle(); // Only if you need to pass data
-
-                    Navigation.findNavController(view)
-                            .navigate(R.id.action_nav_search_to_searchBYCountryFragment, bundle);
+                    Navigation.findNavController(view).navigate(SearchMainFragmentDirections.actionNavSearchToSearchBYCountryFragment());
                 }
 
 
@@ -93,10 +90,8 @@ public class SearchFragment extends Fragment {
                     });
 
                 } else if (networkChecker.checkIfInternetIsConnected()) {
-                    Navigation.findNavController(view)
-                            .navigate(R.id.action_nav_search_to_categoryFragment);
+                    Navigation.findNavController(view).navigate(SearchMainFragmentDirections.actionNavSearchToCategoryFragment());
                 }
-
 
 
             }
@@ -115,8 +110,7 @@ public class SearchFragment extends Fragment {
                     });
 
                 } else if (networkChecker.checkIfInternetIsConnected()) {
-                    Navigation.findNavController(view)
-                            .navigate(R.id.action_nav_search_to_searchByIngrdiantFragment);
+                    Navigation.findNavController(view).navigate(SearchMainFragmentDirections.actionNavSearchToSearchByIngrdiantFragment());
                 }
 
 
@@ -137,8 +131,7 @@ public class SearchFragment extends Fragment {
                     });
 
                 } else if (networkChecker.checkIfInternetIsConnected()) {
-                    Navigation.findNavController(view)
-                            .navigate(R.id.action_nav_search_to_searchByAllMealsFragment);
+                    Navigation.findNavController(view).navigate(SearchMainFragmentDirections.actionNavSearchToSearchByAllMealsFragment());
                 }
 
 

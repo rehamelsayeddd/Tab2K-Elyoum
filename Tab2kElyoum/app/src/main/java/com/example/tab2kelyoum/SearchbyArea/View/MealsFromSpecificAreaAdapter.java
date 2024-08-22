@@ -53,7 +53,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsFromSpecificAreaAdapter extends RecyclerView.Adapter<MealsFromSpecificAreaAdapter.MyViewHolder> {
-
     private List<MealsItem> meals;
     private ViewGroup viewGroupOfMeal;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
@@ -417,7 +416,6 @@ public class MealsFromSpecificAreaAdapter extends RecyclerView.Adapter<MealsFrom
                                                                FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItemSelected.documentID)
                                                                        .delete()
                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                           @RequiresApi(api = Build.VERSION_CODES.O)
                                                                            @Override
                                                                            public void onSuccess(Void aVoid) {
                                                                                progressDialog.dismiss();

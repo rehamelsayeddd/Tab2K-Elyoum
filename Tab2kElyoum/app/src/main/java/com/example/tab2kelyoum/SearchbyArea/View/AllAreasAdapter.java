@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AllAreasAdapter extends RecyclerView.Adapter<AllAreasAdapter.MyViewHolder> {
 
-    private ViewGroup countryV;
+    private ViewGroup CountryView;
     private List<EachAreaModel> countries;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
 
@@ -33,7 +33,8 @@ public class AllAreasAdapter extends RecyclerView.Adapter<AllAreasAdapter.MyView
     @NonNull
     @Override
     public AllAreasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       countryV = parent;
+        CountryView = parent;
+
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_item , parent , false);
        return new MyViewHolder(view);
     }
@@ -85,37 +86,39 @@ public class AllAreasAdapter extends RecyclerView.Adapter<AllAreasAdapter.MyView
            holder.circleImageView.setImageResource(R.drawable.jamaica);
        }
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (!networkChecker.checkIfInternetIsConnected()) {
-                    // Show toast message on the main thread if no internet connection
-                    Toast.makeText(MainActivity.mainActivity, "Turn internet on to view meals related to this area.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Clear text input and navigate to the new fragment
+                    MainActivity.mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.mainActivity, "Turn internet on to view meals related to this area.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else if (networkChecker.checkIfInternetIsConnected()) {
                     AllAreas.textInputEditText.setText("");
+                    Navigation.findNavController(CountryView).navigate(AllAreasDirections.actionSearchBYCountryFragmentToMealByCountryFragment(countries.get(position).getStrArea()));
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("country", countries.get(position).getStrArea());
-
-                    Navigation.findNavController(countryV)
-                            .navigate(R.id.action_searchBYCountryFragment_to_mealByCountryFragment, bundle);
                 }
+
+
             }
         });
-
-
-
     }
 
     @Override
     public int getItemCount() {
-         return countries.size();
+        return countries.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView country;
         CircleImageView circleImageView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             country = itemView.findViewById(R.id.item_country);

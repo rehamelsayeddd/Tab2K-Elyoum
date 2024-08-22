@@ -100,11 +100,10 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             @Override
             public void onClick(View view) {
 
-                Navigation.findNavController(view).navigate(R.id.action_homepageFragment_to_mealDetailsFragment);
+                Navigation.findNavController(viewGroupOfMeal).navigate(homepageFragmentDirections.actionHomepageFragmentToMealDetailsFragment(meals.get(position)));
 
             }
         });
-
 
         if (MainActivity.isLoginAsGuest == false) {
 

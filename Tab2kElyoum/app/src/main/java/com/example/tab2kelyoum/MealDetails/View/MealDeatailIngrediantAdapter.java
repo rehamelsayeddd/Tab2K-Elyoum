@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.MealDetails.View;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tab2kelyoum.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MealDetailIngrediantAdapter extends RecyclerView.Adapter<MealDetailIngrediantAdapter.MyViewHolder> {
+public class MealDeatailIngrediantAdapter extends RecyclerView.Adapter<MealDeatailIngrediantAdapter.MyViewHolder> {
     private ViewGroup CountryView;
     private List<String> mealsItems = new ArrayList<>();
     private List<String> megure = new ArrayList<>();
 
-    public MealDetailIngrediantAdapter(List<String> mealsItems, List<String> megure) {
+    public MealDeatailIngrediantAdapter(List<String> mealsItems, List<String> megure) {
         this.mealsItems = mealsItems;
         this.megure = megure;
     }
@@ -31,7 +32,7 @@ public class MealDetailIngrediantAdapter extends RecyclerView.Adapter<MealDetail
         CountryView = parent;
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingrediant_item, parent, false);
-        return new MealDetailIngrediantAdapter.MyViewHolder(view);
+        return new MealDeatailIngrediantAdapter.MyViewHolder(view);
     }
 
     @Override
@@ -62,4 +63,3 @@ public class MealDetailIngrediantAdapter extends RecyclerView.Adapter<MealDetail
         }
     }
 }
-

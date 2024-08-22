@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.example.tab2kelyoum.SearchFragment"
+        android:name="com.example.tab2kelyoum.SearchMain.View.SearchMainFragment"
         android:label="fragment_nav_search"
         tools:layout="@layout/fragment_nav_search" >
         <action
@@ -111,15 +111,12 @@
     <fragment
         android:id="@+id/searchBYCountryFragment"
         android:name="com.example.tab2kelyoum.SearchbyArea.View.AllAreas"
-        android:label="fragment_search_b_y_country"
+        android:label="fragment_search_by_country"
         tools:layout="@layout/fragment_search_by_country" >
         <action
             android:id="@+id/action_searchBYCountryFragment_to_mealByCountryFragment"
             app:destination="@id/mealByCountryFragment">
-            <!-- Declare the argument here -->
-            <argument
-                android:name="strArea"
-                app:argType="string" />
+
         </action>
     </fragment>
 
@@ -160,11 +157,10 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.tab2kelyoum.MealDetailsFragment"
-        android:label="fragment_meal_details"
+        android:name="com.example.tab2kelyoum.MealDetails.View.MealDetailsFragment"
+        android:label="MealDetailsFragment"
         tools:layout="@layout/fragment_meal_details">
 
-        <!-- Define the argument -->
         <argument
             android:name="mealDetailsArgs"
             app:argType="com.example.tab2kelyoum.Model.MealsItem" />
@@ -174,7 +170,7 @@
     <fragment
         android:id="@+id/mealByCategoryFragment"
         android:name="com.example.tab2kelyoum.mealByCategoryFragment"
-        android:label="fragment_meal_by_category"
+        android:label="MealByCategoryFragment"
         tools:layout="@layout/fragment_meal_by_category" >
         <argument
             android:name="category"

@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.MealDetails.View;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -30,6 +30,8 @@ import com.example.tab2kelyoum.Connection.RetrofitClient;
 import com.example.tab2kelyoum.Home.View.TodayPlannerAdapter;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
+import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,7 +64,7 @@ public class MealDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<String> ingrediant = new ArrayList<>();
     private List<String> megure = new ArrayList<>();
-    private MealDetailIngrediantAdapter mealDeatailIngrediantAdapter;
+    private MealDeatailIngrediantAdapter mealDeatailIngrediantAdapter;
     private String[] split;
     private Boolean youtubeURLisExists = false;
     private ImageButton btn_addToFavorites_meal_details;
@@ -83,7 +85,7 @@ public class MealDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
+        mealsItem = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDetailsArgs();
 
         mealName = view.findViewById(R.id.tv_mealName);
         area = view.findViewById(R.id.tv_meal_area);
@@ -156,7 +158,7 @@ public class MealDetailsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        mealDeatailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
+        mealDeatailIngrediantAdapter = new MealDeatailIngrediantAdapter(ingrediant, megure);
         recyclerView.setAdapter(mealDeatailIngrediantAdapter);
 
         if (MainActivity.isLoginAsGuest == false) {
@@ -202,6 +204,7 @@ public class MealDetailsFragment extends Fragment {
             });
 
 
+
         } else if (MainActivity.isLoginAsGuest == true) {
             btn_addToFavorites_meal_details.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -219,13 +222,14 @@ public class MealDetailsFragment extends Fragment {
             });
 
 
+
         }
 
         btn_addToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //   Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
+               // Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
 
 
             }
@@ -548,5 +552,5 @@ public class MealDetailsFragment extends Fragment {
                 });
 
     }
-}
 
+}
