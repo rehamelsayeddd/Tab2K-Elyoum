@@ -4,7 +4,7 @@ import com.example.tab2kelyoum.SearchbyArea.Model.RootAreasList;
 import com.example.tab2kelyoum.SearchByCategory.Model.RootCategoriesList;
 import com.example.tab2kelyoum.SearchByIngredient.Model.RootIngredientsList;
 import com.example.tab2kelyoum.Model.RootMeal;
-import com.example.tab2kelyoum.Model.RootMealsFromSingleLetter;
+import com.example.tab2kelyoum.SearchbyMeal.Model.RootMealsFromSingleLetter;
 import com.example.tab2kelyoum.Model.RootSingleMeal;
 
 import io.reactivex.rxjava3.core.Observable;

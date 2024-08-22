@@ -2,7 +2,9 @@ package com.example.tab2kelyoum.SearchByCategory.Presenter;
 
 import com.example.tab2kelyoum.Repoistry.RepoistryRemote;
 
-public class MealFromSpecificCategoryPresenter { private InterfaceMealFromSpecificCategory interfaceMealFromSpecificCategory;
+public class MealFromSpecificCategoryPresenter {
+
+    private InterfaceMealFromSpecificCategory interfaceMealFromSpecificCategory;
     private static final String TAG = "MealFromSpecificCategoryPresenter";
     private RepoistryRemote repositoryRemote;
 

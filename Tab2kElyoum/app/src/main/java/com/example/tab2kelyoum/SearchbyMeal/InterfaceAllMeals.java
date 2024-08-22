@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SearchbyMeal;
 
 import com.example.tab2kelyoum.Model.MealsItem;
 
