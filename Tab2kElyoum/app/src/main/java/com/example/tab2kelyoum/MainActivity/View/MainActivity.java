@@ -1,6 +1,8 @@
 package com.example.tab2kelyoum.MainActivity.View;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -152,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -161,12 +164,22 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
                 if (itemId == R.id.drawerLogout) {
                     navigationView.setVisibility(View.GONE);
                     drawerLogOut();
+                } else if (itemId == R.id.drawerDeleteAcount) {
+                    if (isLoginAsGuest) {
+                        Toast.makeText(MainActivity.this, R.string.needAcount, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (!networkChecker.checkIfInternetIsConnected()) {
+                            Toast.makeText(MainActivity.this, R.string.needAcount, Toast.LENGTH_SHORT).show();
+                        } else {
+                            navigationView.setVisibility(View.GONE);
+                            drawerDeleteAccount();
+                        }
+                    }
                 }
 
                 return false;
             }
         });
-
 
 
         View headerView = navigationView.getHeaderView(0);
@@ -175,16 +188,6 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
 
     }
 
-    private void drawerChangeAppLanguage() {
-        if (Locale.getDefault().getDisplayLanguage().toString().equals("English")) {
-            setLocale("ar");
-        } else {
-            setLocale("en");
-        }
-
-        recreate();
-
-    }
 
     public void setLocale(String lang) {
         Locale locale = new Locale(lang);
@@ -218,12 +221,41 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
         }
     }
 
+    private void drawerDeleteAccount() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.WaitAreYouSure);
+        builder.setTitle(R.string.DeleteAccount);
+        builder.setCancelable(true);
+
+
+        builder.setPositiveButton(R.string.sure, (DialogInterface.OnClickListener) (dialog, which) -> {
+            if (!networkChecker.checkIfInternetIsConnected()) {
+                MainActivity.mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.mainActivity, R.string.turnOnInternent, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                mainActivityPresenter = new MainActivityPresenter((InterfaceMain) this);
+                mainActivityPresenter.deleteAccountData();
+            }
+        });
+
+        builder.setNegativeButton(R.string.keep, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
 
     private void checkNetwork() {
         if (!networkChecker.checkIfInternetIsConnected()) {
             tv_internetConnection.setVisibility(View.VISIBLE);
             tv_internetConnection.setText(R.string.noInternet);
-
+           // tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.red));
         }
 
 
@@ -243,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
                         if (!timerIsExists) {
                             timerIsExists = true;
 
-
+                         //   tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.green));
                             tv_internetConnection.setText(R.string.backInternet);
                             timer = new Timer();
                             timer.schedule(new TimerTask() {
@@ -279,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
                     public void run() {
                         tv_internetConnection.setVisibility(View.VISIBLE);
                         tv_internetConnection.setText(R.string.noInternet);
-
+                       // tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.red));
                     }
                 });
 

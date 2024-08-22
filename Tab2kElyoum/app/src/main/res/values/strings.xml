@@ -61,6 +61,16 @@
     <string name="ingredient">Ingredients</string>
     <string name="btn_addToCalendar">Add to calender</string>
     <string name="meals_filtered_by_category">Meals filtered by category</string>
+    <string name="deleteaccount">Delete Account</string>
+    <string name="needAcount">Need Account!</string>
+    <string name="WaitAreYouSure">Are you sure?</string>
+    <string name="DeleteAccount">Delete Account</string>
+    <string name="turnOnInternent">Turn on the Internet</string>
+    <string name="sure">Sure!</string>
+    <string name="keep">Keep!</string>
+
+
+
 
 
 
