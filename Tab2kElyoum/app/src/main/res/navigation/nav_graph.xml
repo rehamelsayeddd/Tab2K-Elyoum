@@ -80,7 +80,7 @@
 
     <fragment
         android:id="@+id/nav_weekPlanners"
-        android:name="com.example.tab2kelyoum.nav_weekPlanners"
+        android:name="com.example.tab2kelyoum.WeekPlanner.WeekPlanner"
         android:label="fragment_nav_week_planners"
         tools:layout="@layout/fragment_nav_week_planners" >
         <action

@@ -1,15 +1,16 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.WeekPlanner;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
 
-public class nav_weekPlanners extends Fragment {
+import com.example.tab2kelyoum.R;
+
+
+public class WeekPlanner extends Fragment {
 
 
 
