@@ -122,7 +122,7 @@ public class FavoriteMealsAdapter extends RecyclerView.Adapter<FavoriteMealsAdap
 
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(viewGroup).navigate(FavoriteMealsDirections.actionNavFavoriteMealsToMealDetailsFragment(mealsFavorite.get(position)));
+                Navigation.findNavController(viewGroup).navigate(FavoriteMealsDirections.actionNavFavoriteMealToMealDetailsFragment(mealsFavorite.get(position)));
                 mealsFavorite.clear();
 
             }
