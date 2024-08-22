@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.SearchByCategory;
+package com.example.tab2kelyoum.SearchByCategory.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

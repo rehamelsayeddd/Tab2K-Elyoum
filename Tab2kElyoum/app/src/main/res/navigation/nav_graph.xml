@@ -122,7 +122,7 @@
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.example.tab2kelyoum.SearchByCategory.AllCategories"
+        android:name="com.example.tab2kelyoum.SearchByCategory.View.AllCategories"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" >
         <action
@@ -169,7 +169,7 @@
 
     <fragment
         android:id="@+id/mealByCategoryFragment"
-        android:name="com.example.tab2kelyoum.SearchByCategory.MealsFromSpecificCategory"
+        android:name="com.example.tab2kelyoum.SearchByCategory.View.MealsFromSpecificCategory"
         android:label="MealByCategoryFragment"
         tools:layout="@layout/fragment_meal_by_category" >
         <argument

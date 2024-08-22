@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.SearchByCategory;
+package com.example.tab2kelyoum.SearchByCategory.View;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +18,6 @@ import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.SearchByCategory.Model.EachCategoryModel;
 import com.example.tab2kelyoum.SearchByCategory.Presenter.AllCategoriesPresenter;
 import com.example.tab2kelyoum.SearchByCategory.Presenter.InterfaceAllCategories;
-import com.example.tab2kelyoum.SearchByCategory.View.AllCategoriesAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class AllCategories extends Fragment implements InterfaceAllCategories {
     public static TextInputEditText textInputEditText;
     private AllCategoriesAdapter allCategoriesAdapter;
     private RecyclerView recyclerView;
-    private AllCategoriesPresenter presenterAllCategories;
+    private AllCategoriesPresenter allCategoriesPresenter;
     private NetworkChecker networkChecker = NetworkChecker.getInstance();
 
     @Override
@@ -40,8 +39,8 @@ public class AllCategories extends Fragment implements InterfaceAllCategories {
 
         recyclerView = view.findViewById(R.id.rv_Categories);
 
-        presenterAllCategories = new PresenterAllCategories(this);
-        presenterAllCategories.getAllCategories();
+        allCategoriesPresenter = new AllCategoriesPresenter(this);
+        allCategoriesPresenter.getAllCategories();
 
 
 
