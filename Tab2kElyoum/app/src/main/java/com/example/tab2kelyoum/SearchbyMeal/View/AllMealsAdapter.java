@@ -95,7 +95,7 @@ public class AllMealsAdapter extends RecyclerView.Adapter<AllMealsAdapter.MyView
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                    rootMeal -> { Navigation.findNavController(viewGroup).navigate(AllMealsDirections.actionSearchByAllMealsFragmentToMealDeatailsFragment(rootMeal.getMeals().get(0)));
+                                    rootMeal -> { Navigation.findNavController(viewGroup).navigate(AllMealsDirections.actionSearchByAllMealsFragmentToMealDetailsFragment(rootMeal.getMeals().get(0)));
 
                                     }
                             );
