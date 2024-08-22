@@ -1,16 +1,16 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SearchByCategory;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class categoryFragment extends Fragment {
+import androidx.fragment.app.Fragment;
+
+import com.example.tab2kelyoum.R;
 
 
+public class MealsFromSpecificCategory extends Fragment {
 
 
     @Override
@@ -23,6 +23,6 @@ public class categoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        return inflater.inflate(R.layout.fragment_meal_by_category, container, false);
     }
 }
