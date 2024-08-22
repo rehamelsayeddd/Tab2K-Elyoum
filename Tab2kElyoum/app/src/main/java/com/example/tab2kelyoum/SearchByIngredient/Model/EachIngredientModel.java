@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.Model;
+package com.example.tab2kelyoum.SearchByIngredient.Model;
 
 public class EachIngredientModel {
     //to set the ingredient

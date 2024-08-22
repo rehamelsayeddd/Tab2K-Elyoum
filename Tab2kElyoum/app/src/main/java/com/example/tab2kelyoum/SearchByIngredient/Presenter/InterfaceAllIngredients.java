@@ -1,6 +1,6 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SearchByIngredient.Presenter;
 
-import com.example.tab2kelyoum.Model.EachIngredientModel;
+import com.example.tab2kelyoum.SearchByIngredient.Model.EachIngredientModel;
 
 import java.util.List;
 
