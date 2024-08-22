@@ -90,7 +90,7 @@
 
     <fragment
         android:id="@+id/searchByAllMealsFragment"
-        android:name="com.example.tab2kelyoum.searchByAllMealsFragment"
+        android:name="com.example.tab2kelyoum.SearchbyMeal.View.AllMeals"
         android:label="fragment_search_by_all_meals"
         tools:layout="@layout/fragment_search_by_all_meals" >
         <action
