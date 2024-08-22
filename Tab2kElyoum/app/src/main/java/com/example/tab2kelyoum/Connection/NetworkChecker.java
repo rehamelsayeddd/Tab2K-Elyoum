@@ -1,8 +1,7 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.Connection;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 
 /**

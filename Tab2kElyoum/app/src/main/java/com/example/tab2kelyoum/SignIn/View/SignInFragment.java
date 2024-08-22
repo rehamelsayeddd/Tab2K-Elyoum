@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.SignIn.Presenter.InterfaceSignIn;
 import com.example.tab2kelyoum.SignIn.Presenter.SignInPresenter;

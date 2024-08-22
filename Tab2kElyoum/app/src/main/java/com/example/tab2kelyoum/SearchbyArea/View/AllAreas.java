@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.SearchbyArea.Model.EachAreaModel;
 import com.example.tab2kelyoum.SearchbyArea.Presenter.AllAreasPresenter;

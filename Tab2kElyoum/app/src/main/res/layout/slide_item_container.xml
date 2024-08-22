@@ -118,7 +118,7 @@
                 android:background="@drawable/circular"
                 android:elevation="20dp"
                 android:scaleType="center"
-                android:src="@drawable/heartadd"
+                android:src="@drawable/ic_baseline_favorite_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.954"
                 app:layout_constraintStart_toStartOf="parent"

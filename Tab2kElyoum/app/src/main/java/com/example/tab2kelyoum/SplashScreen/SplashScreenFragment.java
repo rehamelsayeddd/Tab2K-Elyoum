@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum;
+package com.example.tab2kelyoum.SplashScreen;
 
 import android.os.Bundle;
 
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.tab2kelyoum.R;
 
 public class SplashScreenFragment extends Fragment {
     private LottieAnimationView gifImageView;

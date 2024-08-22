@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -160,10 +160,10 @@ public static TodayPlannerAdapter getInstance(){
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            week_plannerMealName = itemView.findViewById(R.id.week_plannerMealName);
-            week_plannerMealArea = itemView.findViewById(R.id.week_plannerMealArea);
-            week_planner_imgMealImg = itemView.findViewById(R.id.week_planner_imgMealImg);
-            removeWeekPlannerItembtn = itemView.findViewById(R.id.removeWeekPlannerItembtn);
+            week_plannerMealName = itemView.findViewById(R.id.week_planner_tv_mealName);
+            week_plannerMealArea = itemView.findViewById(R.id.week_planner_tv_mealArea);
+            week_planner_imgMealImg = itemView.findViewById(R.id.week_planner_img_mealImg);
+            removeWeekPlannerItembtn = itemView.findViewById(R.id.btn_removeWeekPlannerItem);
 
 
         }

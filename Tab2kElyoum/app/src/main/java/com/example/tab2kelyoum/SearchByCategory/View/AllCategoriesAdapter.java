@@ -11,7 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.SearchByCategory.Model.EachCategoryModel;
 

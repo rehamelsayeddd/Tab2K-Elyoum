@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Register.Presenter.InterfaceRegister;
 import com.example.tab2kelyoum.Register.Presenter.RegisterPresenter;

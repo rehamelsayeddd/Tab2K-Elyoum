@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.SearchByIngredient.Presenter.InterfaceMealFromSpecificIngredient;
 import com.example.tab2kelyoum.SearchByIngredient.Presenter.MealFromSpecificIngredientPresenter;

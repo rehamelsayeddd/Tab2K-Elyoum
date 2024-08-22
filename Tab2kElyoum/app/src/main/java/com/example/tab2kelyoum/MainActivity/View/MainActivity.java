@@ -25,7 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.tab2kelyoum.Home.View.TodayPlannerAdapter;
 import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
 import com.example.tab2kelyoum.MainActivity.Presenter.MainActivityPresenter;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;

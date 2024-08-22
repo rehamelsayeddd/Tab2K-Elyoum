@@ -2,6 +2,7 @@ package com.example.tab2kelyoum.WeekPlanner;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.tab2kelyoum.Home.View.TodayPlannerAdapter;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.NetworkChecker;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -101,6 +103,7 @@ public class WeekPlannerAdapter extends RecyclerView.Adapter<WeekPlannerAdapter.
                     FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItem.documentID)
                             .delete()
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @RequiresApi(api = Build.VERSION_CODES.O)
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.i(TAG, "DocumentSnapshot successfully deleted!");
