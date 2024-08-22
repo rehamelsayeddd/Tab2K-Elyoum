@@ -285,7 +285,7 @@ public class MealsFromSpecificCategoryAdapter extends RecyclerView.Adapter<Meals
                                                                                Toast.makeText(viewGroupOfMeal.getContext(), "Item removed successfully", Toast.LENGTH_SHORT).show();
                                                                                Log.i(TAG, "DocumentSnapshot successfully deleted!");
 
-                                                                               rep = new RepositoryLocal(viewGroupOfMeal.getContext());
+                                                                               rep = new RepoistryLocal(viewGroupOfMeal.getContext());
                                                                                rep.delete(mealsItemSelected);
 
                                                                            }
