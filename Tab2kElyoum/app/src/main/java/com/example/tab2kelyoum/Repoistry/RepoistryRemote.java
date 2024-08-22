@@ -12,7 +12,7 @@ import com.example.tab2kelyoum.Connection.RetrofitClient;
 import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceAllAreas;
 import com.example.tab2kelyoum.SearchByCategory.Presenter.InterfaceAllCategories;
 import com.example.tab2kelyoum.SearchByIngredient.Presenter.InterfaceAllIngredients;
-import com.example.tab2kelyoum.SearchbyMeal.InterfaceAllMeals;
+import com.example.tab2kelyoum.SearchbyMeal.Presenter.InterfaceAllMeals;
 import com.example.tab2kelyoum.MainActivity.Presenter.InterfaceMain;
 import com.example.tab2kelyoum.SearchbyArea.Presenter.InterfaceMealFromSpecificArea;
 import com.example.tab2kelyoum.SearchByCategory.Presenter.InterfaceMealFromSpecificCategory;
