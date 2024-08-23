@@ -7,9 +7,8 @@ import androidx.annotation.NonNull;
 
 import com.example.tab2kelyoum.Database.DB;
 import com.example.tab2kelyoum.Database.MealDao;
-import com.example.tab2kelyoum.Model.MealsItem;
-
 import com.example.tab2kelyoum.Home.Presenter.homepageInterface;
+import com.example.tab2kelyoum.Model.MealsItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,14 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
+
 public class RepoistryLocal {
     private static final String TAG = "Repository";
     private Context context;
-    private MealDao mealDAO;
+    private MealDao mealDAO; //local
     private Flowable<List<MealsItem>> storedMealsItems;
     private List<MealsItem> mealsItemsFromFirestore = new ArrayList<>();
     private List<MealsItem> mealsWeekPlanSaturday = new ArrayList<>(), mealsWeekPlanSunday = new ArrayList<>(), mealsWeekPlanMonday = new ArrayList<>(), mealsWeekPlanTuesday = new ArrayList<>(), mealsWeekPlanWednesday = new ArrayList<>(), mealsWeekPlanThursday = new ArrayList<>(), mealsWeekPlanFriday = new ArrayList<>();
-    private homepageInterface interfaceDailyInspirations;
+    private homepageInterface homepageInterface;//as presenter to communicate with view
 
     public RepoistryLocal(Context context) {
         this.context = context;
@@ -39,7 +39,7 @@ public class RepoistryLocal {
         storedMealsItems = mealDAO.getStoredMealsItems();
     }
 
-    public RepoistryLocal(homepageInterface interfaceDailyInspirations, Context context) {
+    public RepoistryLocal(homepageInterface homepageInterface, Context context) {
         this.context = context;
 
         DB db = DB.getInstance(context);
@@ -47,10 +47,11 @@ public class RepoistryLocal {
 
         storedMealsItems = mealDAO.getStoredMealsItems();
 
-        this.interfaceDailyInspirations = interfaceDailyInspirations;
+        this.homepageInterface = homepageInterface;
     }
-
+//to return from room database
     public Flowable<List<MealsItem>> returnStoredMealsItems() {
+
         return storedMealsItems;
     }
 
@@ -63,7 +64,22 @@ public class RepoistryLocal {
         }).start();
     }
 
-    public void insert(MealsItem mealsItem, String weekDay, String documentID) {
+  /** public Completable delete (MealsItem mealsItem) {
+       return Completable.fromAction(() -> mealDAO.deleteMeal(mealsItem))
+               .subscribeOn(Schedulers.io());
+   }
+**/
+
+
+   /** public Completable insert (MealsItem mealsItem, String weekDay, String documentID) {
+        return Completable.fromAction(() -> {
+            mealsItem.setWeekDay(weekDay);
+            mealsItem.setDocumentID(documentID);
+            mealDAO.insertMeal(mealsItem);
+        }).subscribeOn(Schedulers.io());
+    }
+   **/
+   public void insert(MealsItem mealsItem, String weekDay, String documentID) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,6 +94,7 @@ public class RepoistryLocal {
         return mealDAO.findMealByName(mealName, weekDayString);
     }
 
+//to load meals from firestore and store them in roomDB
     public void loadRoomFromFirestore() {
         getFavoriteMealsUsingFirestore();
         getWeekPlanMealsUsingFirestore();
@@ -88,7 +105,7 @@ public class RepoistryLocal {
         mealDAO.deleteTableRoom();
     }
 
-
+//reterives the fav meals based on userEmail from firestore  and then inserts to roomDB
     private void getFavoriteMealsUsingFirestore() {
         FirebaseFirestore.getInstance().collection("userFavorites")
                 .get()
@@ -123,7 +140,7 @@ public class RepoistryLocal {
                                        }
                 );
     }
-
+//retervies based on userEmail and week of the day from firebase to roomDB
     private void getWeekPlanMealsUsingFirestore() {
         FirebaseFirestore.getInstance().collection("userWeekPlan")
                 .get()
@@ -157,7 +174,7 @@ public class RepoistryLocal {
                                                        }
 
                                                    }
-                                                   interfaceDailyInspirations.responseOfLoadingDataFromFirestoreToRoom();
+                                                   homepageInterface.responseOfLoadingDataFromFirestoreToRoom();
                                                } else {
                                                    Log.i(TAG, "Error loading documents from firestore to Room.", task.getException());
                                                }

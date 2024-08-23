@@ -81,9 +81,9 @@ public class homepageFragment extends Fragment implements homepageInterface {
             homePresenter.loadRoomFromFirestore();
         }
 
-        if (!MainActivity.isLoginAsGuest) {
-            homePresenter.loadHeaderTitle();
-        }
+       // if (!MainActivity.isLoginAsGuest) {
+         //   homePresenter.loadHeaderTitle();
+        //}
 
 
     }

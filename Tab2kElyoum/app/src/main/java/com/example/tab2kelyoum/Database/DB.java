@@ -11,7 +11,6 @@ import com.example.tab2kelyoum.Model.MealsItem;
 @Database(entities = {MealsItem.class}, exportSchema = false, version = 1)
 public abstract class DB extends RoomDatabase {
 
-    // Singleton instance of the database
     private static DB instance = null;
 
     // Abstract method to get the DAO (Data Access Object) for accessing the database
@@ -26,7 +25,6 @@ public abstract class DB extends RoomDatabase {
                             "Meal")   // The database name
                     .build();
         }
-        // Return the singleton instance
         return instance;
     }
 }

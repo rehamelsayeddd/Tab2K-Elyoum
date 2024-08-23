@@ -9,7 +9,7 @@ public class RegisterPresenter {private static final String TAG = "PresenterFire
 
     private InterfaceRegister interfaceRegister;
     private RepoistryRemote repositoryRemote;
-    private Context context;
+    private Context context; //to interact with local DB
     private RepoistryLocal repositoryLocal;
 
 
