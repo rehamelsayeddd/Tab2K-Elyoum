@@ -229,7 +229,6 @@ public class MealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               // Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
 
 
             }
