@@ -137,9 +137,9 @@ public static TodayPlannerAdapter getInstance(){
             public void onClick(View view) {
 
 
-           //Navigation.findNavController(viewGroup).navigate(homepageFragmentDirections.actionHomepageFragmentToMealDetailsFragment(mealsWeekPlanner.get(position)));
-                Navigation.findNavController(viewGroup)
-                        .navigate(R.id.action_homepageFragment_to_mealDetailsFragment);
+           Navigation.findNavController(viewGroup).navigate(homepageFragmentDirections.actionHomepageFragmentToMealDetailsFragment(mealsWeekPlanner.get(position)));
+               // Navigation.findNavController(viewGroup)
+                 //       .navigate(R.id.action_homepageFragment_to_mealDetailsFragment);
 
             }
         });

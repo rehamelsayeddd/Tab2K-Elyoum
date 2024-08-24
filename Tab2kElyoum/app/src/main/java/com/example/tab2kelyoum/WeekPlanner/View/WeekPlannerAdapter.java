@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.WeekPlanner;
+package com.example.tab2kelyoum.WeekPlanner.View;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -56,7 +56,7 @@ public class WeekPlannerAdapter extends RecyclerView.Adapter<WeekPlannerAdapter.
         context = parent.getContext();
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View itemView = layoutInflater.inflate(R.layout.row_week_planner, parent, false);          //\\\\\\\\\\
+        View itemView = layoutInflater.inflate(R.layout.row_week_planner, parent, false);
         WeekPlannerAdapter.ViewHolder viewHolder = new WeekPlannerAdapter.ViewHolder(itemView);
         Log.i(TAG, "onCreateViewHolder: ");
 
@@ -155,9 +155,7 @@ public class WeekPlannerAdapter extends RecyclerView.Adapter<WeekPlannerAdapter.
             @Override
             public void onClick(View view) {
 
-
                 Navigation.findNavController(viewGroup).navigate(WeekPlannerDirections.actionNavWeekPlannersToMealDetailsFragment(mealsWeekPlanner.get(position)));
-                //mealsWeekPlanner.clear(); //cause clicked back multiplied whats shown in the view.
 
             }
         });

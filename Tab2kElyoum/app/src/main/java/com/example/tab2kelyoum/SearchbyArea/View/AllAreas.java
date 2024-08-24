@@ -52,8 +52,7 @@ public class AllAreas extends Fragment implements InterfaceAllAreas {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                allAreasAdapter = new AllAreasAdapter(areas.stream().filter(
-                        EachAreaModel -> EachAreaModel.getStrArea().toLowerCase().startsWith(s.toString().toLowerCase())).collect(Collectors.toList()));
+                allAreasAdapter = new AllAreasAdapter(areas.stream().filter(EachAreaModel -> EachAreaModel.getStrArea().toLowerCase().startsWith(s.toString().toLowerCase())).collect(Collectors.toList()));
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 recyclerView.setLayoutManager(linearLayoutManager);
