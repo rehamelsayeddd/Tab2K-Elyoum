@@ -2,6 +2,12 @@ package com.example.tab2kelyoum.Home.View;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.example.tab2kelyoum.Home.Presenter.homePresenter;
 import com.example.tab2kelyoum.Home.Presenter.homepageInterface;
@@ -34,7 +33,7 @@ import java.util.List;
 
 public class homepageFragment extends Fragment implements homepageInterface {
 
-    private static final String TAG = "DailyInspirations";
+    private static final String TAG = "HomepageFragment";
 
 
     private ViewPager2 viewPager2;
@@ -81,22 +80,7 @@ public class homepageFragment extends Fragment implements homepageInterface {
             homePresenter.loadRoomFromFirestore();
         }
 
-       // if (!MainActivity.isLoginAsGuest) {
-         //   homePresenter.loadHeaderTitle();
-        //}
-
-
     }
-
-
-
-    private Runnable sliderRunnable = new Runnable() {
-        @Override
-        public void run() {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
-        }
-
-    };
 
 
     @Override
@@ -127,8 +111,6 @@ public class homepageFragment extends Fragment implements homepageInterface {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable, 5000);
             }
         });
     }
@@ -177,17 +159,12 @@ public class homepageFragment extends Fragment implements homepageInterface {
     @Override
     public void onPause() {
         super.onPause();
-        sliderHandler.removeCallbacks(sliderRunnable);
         Log.i(TAG, "onPause: ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        sliderHandler.postDelayed(sliderRunnable, 5000);
-
-
         Log.i(TAG, "onResume: ");
     }
 
