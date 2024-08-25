@@ -75,9 +75,6 @@ public class MealsFromSpecificArea extends Fragment implements InterfaceMealFrom
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void handlingRecyclerView() {
-
-    }
 
     @Nullable
     @Override

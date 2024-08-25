@@ -16,9 +16,8 @@ import io.reactivex.rxjava3.core.Flowable;
 @Dao
 public interface MealDao {
 
-    // DAO (Data Access Object) interface for interacting with the MealsItem table in the Room database
-    //by using rxjava to handle data and make it synchronizied when data changes
-    // Query to retrieve all stored MealsItem records as a Flowable list
+
+    // Query to retrieve all stored MealsItem records as a Flowable list rxjava
         @Query("SELECT * FROM MealsItem")
         Flowable<List<MealsItem>> getStoredMealsItems();
 

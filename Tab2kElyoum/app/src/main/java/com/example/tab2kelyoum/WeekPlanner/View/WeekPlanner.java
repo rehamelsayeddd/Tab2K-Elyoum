@@ -1,4 +1,4 @@
-package com.example.tab2kelyoum.WeekPlanner;
+package com.example.tab2kelyoum.WeekPlanner.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tab2kelyoum.Model.MealsItem;
 import com.example.tab2kelyoum.R;
+import com.example.tab2kelyoum.WeekPlanner.Presenter.WeekPlannerPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

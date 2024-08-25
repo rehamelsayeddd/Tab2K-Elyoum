@@ -63,103 +63,96 @@ public class AllMeals extends Fragment implements InterfaceAllMeals {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(TAG, "onTextChanged: " + isInternetDisconnectedWhileTyping);
+                    Log.i(TAG, "onTextChanged: " + isInternetDisconnectedWhileTyping);
 
-                if (!networkChecker.checkIfInternetIsConnected()) {
-                    MainActivity.mainActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            isInternetDisconnectedWhileTyping = true;
-                            toastMessage.cancel();
-                            toastMessage = Toast.makeText(MainActivity.mainActivity, "Turn internet on to be able to search.", Toast.LENGTH_SHORT);
-                            toastMessage.show();
-                        }
-                    });
+                    boolean isConnected = networkChecker.checkIfInternetIsConnected();
 
-                } else if (networkChecker.checkIfInternetIsConnected()) {
-                    if (isInternetDisconnectedWhileTyping == true & s.length() == 1) {
-                        isInternetDisconnectedWhileTyping = false;
-                        allMealsPresenter.getAllMeals(s.charAt(0));
-                    } else if (isInternetDisconnectedWhileTyping == true & s.length() > 1) {
-                        shouldFilterAfterInternetWasOff = true;
-                        isInternetDisconnectedWhileTyping = false;
-                        allMealsPresenter.getAllMeals(s.charAt(0));
-                        if (mealsItemList.size() != 0) {
-                            filteredMealsItemList.clear();
-                            Observable<MealsItem> observable = Observable.fromIterable(mealsItemList);
-                            observable
-                                    .filter
-                                            (mealsItem ->
-                                                    mealsItem.getStrMeal().toLowerCase().contains(searchTextInput.getText().toString().toLowerCase()))
-                                    .subscribe(
-                                            mealsItem -> {
-                                                filteredMealsItemList.add(mealsItem);
-
-                                            }
-                                            , (error) -> {
-                                            }
-                                            , () -> {
-                                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                                                recyclerView.setLayoutManager(linearLayoutManager);
-                                                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                                                allMealsAdapter = new AllMealsAdapter(filteredMealsItemList);
-                                                recyclerView.setAdapter(allMealsAdapter);
-                                            }
-                                    );
-                        }
-                    } else {
-                        isInternetDisconnectedWhileTyping = false;
-                        if (s.length() == 0) {
-                            mealsItemList.clear();
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                            recyclerView.setLayoutManager(linearLayoutManager);
-
-                            linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                            allMealsAdapter = new AllMealsAdapter(mealsItemList);
-                            recyclerView.setAdapter(allMealsAdapter);
-                        }
-                        if (s.length() == 1) {
-
-                            allMealsPresenter.getAllMeals(s.charAt(0));
-
-
-                        } else if (s.length() > 1) {
-
-                            if (mealsItemList.size() != 0) {
-                                filteredMealsItemList.clear();
-                                Observable<MealsItem> observable = Observable.fromIterable(mealsItemList);
-                                observable
-                                        .filter
-                                                (mealsItem ->
-                                                        mealsItem.getStrMeal().toLowerCase().contains(searchTextInput.getText().toString().toLowerCase()))
-                                        .subscribe(
-                                                mealsItem -> {
-                                                    filteredMealsItemList.add(mealsItem);
-
-                                                }
-                                                , (error) -> {
-                                                }
-                                                , () -> {
-                                                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                                                    recyclerView.setLayoutManager(linearLayoutManager);
-                                                    linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                                                    allMealsAdapter = new AllMealsAdapter(filteredMealsItemList);
-                                                    recyclerView.setAdapter(allMealsAdapter);
-                                                }
-                                        );
-                            }
-
-
-                        }
+                    // Handling when there is no internet connection
+                    if (!isConnected) {
+                        handleNoInternetConnection();
+                        return;
                     }
 
+                    // Handling when internet is reconnected after disconnection
+                    if (isInternetDisconnectedWhileTyping) {
+                        handleInternetReconnection(s);
+                    } else {
+                        handleTypingWithInternet(s);
+                    }
+                }
 
+                private void handleNoInternetConnection() {
+                    MainActivity.mainActivity.runOnUiThread(() -> {
+                        isInternetDisconnectedWhileTyping = true;
+                        toastMessage.cancel();
+                        toastMessage = Toast.makeText(MainActivity.mainActivity, "Please,Turn internet on to search.", Toast.LENGTH_SHORT);
+                        toastMessage.show();
+                    });
+                }
+
+                private void handleInternetReconnection(CharSequence s) {
+                    isInternetDisconnectedWhileTyping = false;
+
+                    if (s.length() == 1) {
+                        allMealsPresenter.getAllMeals(s.charAt(0));
+                    } else if (s.length() > 1) {
+                        shouldFilterAfterInternetWasOff = true;
+                        allMealsPresenter.getAllMeals(s.charAt(0));
+                        filterMealsAfterInternetReconnection(s);
+                    }
+                }
+
+                private void handleTypingWithInternet(CharSequence s) {
+                    isInternetDisconnectedWhileTyping = false;
+
+                    if (s.length() == 0) {
+                        clearMealList();
+                    } else if (s.length() == 1) {
+                        allMealsPresenter.getAllMeals(s.charAt(0));
+                    } else if (s.length() > 1 && !mealsItemList.isEmpty()) {
+                        filterMeals(s);
+                    }
+                }
+
+                private void filterMealsAfterInternetReconnection(CharSequence s) {
+                    if (!mealsItemList.isEmpty()) {
+                        filteredMealsItemList.clear();
+                        Observable.fromIterable(mealsItemList)
+                                .filter(mealsItem -> mealsItem.getStrMeal().toLowerCase().contains(s.toString().toLowerCase()))
+                                .subscribe(
+                                        filteredMealsItemList::add,
+                                        throwable -> Log.e(TAG, "Error filtering meals", throwable),
+                                        this::updateRecyclerViewWithFilteredMeals
+                                );
+                    }
+                }
+
+                private void filterMeals(CharSequence s) { //filter based on the cuurent input
+                    filteredMealsItemList.clear();
+                    Observable.fromIterable(mealsItemList)
+                            .filter(mealsItem -> mealsItem.getStrMeal().toLowerCase().contains(s.toString().toLowerCase()))
+                            .subscribe(
+                                    filteredMealsItemList::add,
+                                    throwable -> Log.e(TAG, "Error filtering meals", throwable),
+                                    this::updateRecyclerViewWithFilteredMeals
+                            );
+                }
+
+                private void updateRecyclerViewWithFilteredMeals() {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    allMealsAdapter = new AllMealsAdapter(filteredMealsItemList);
+                    recyclerView.setAdapter(allMealsAdapter);
+                }
+
+                private void clearMealList() {
+                    mealsItemList.clear();
+                    updateRecyclerViewWithFilteredMeals();
                 }
 
 
-            }
-
-            @Override
+                @Override
             public void afterTextChanged(Editable s) {
 
             }
@@ -180,39 +173,44 @@ public class AllMeals extends Fragment implements InterfaceAllMeals {
 
     @Override
     public void responseOfDataOnSuccess(List<MealsItem> mealsReceived) {
+        // Update the main meal list with the received data
         mealsItemList = mealsReceived;
+
+        // Setup the RecyclerView with the received data
+        setupRecyclerView(mealsItemList);
+
+        // Check if filtering is needed after the internet was off
+        if (shouldFilterAfterInternetWasOff) {
+            shouldFilterAfterInternetWasOff = false;
+            filterMealsBasedOnSearchInput();
+        }
+    }
+
+    private void setupRecyclerView(List<MealsItem> mealsList) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        allMealsAdapter = new AllMealsAdapter(mealsItemList);
+        allMealsAdapter = new AllMealsAdapter(mealsList);
         recyclerView.setAdapter(allMealsAdapter);
+    }
 
-        if (shouldFilterAfterInternetWasOff) {
-            shouldFilterAfterInternetWasOff = false;
-            if (mealsItemList.size() != 0) {
-                filteredMealsItemList.clear();
-                Observable<MealsItem> observable = Observable.fromIterable(mealsItemList);
-                observable
-                        .filter
-                                (mealsItem ->
-                                        mealsItem.getStrMeal().toLowerCase().contains(searchTextInput.getText().toString().toLowerCase()))
-                        .subscribe(
-                                mealsItem -> {
-                                    filteredMealsItemList.add(mealsItem);
-
-                                }
-                                , (error) -> {
-                                }
-                                , () -> {
-                                    LinearLayoutManager linearLayoutManage = new LinearLayoutManager(requireContext());
-                                    recyclerView.setLayoutManager(linearLayoutManage);
-                                    linearLayoutManage.setOrientation(RecyclerView.VERTICAL);
-                                    allMealsAdapter = new AllMealsAdapter(filteredMealsItemList);
-                                    recyclerView.setAdapter(allMealsAdapter);
-                                }
-                        );
-            }
+    private void filterMealsBasedOnSearchInput() {
+        if (!mealsItemList.isEmpty()) {
+            filteredMealsItemList.clear();
+            Observable.fromIterable(mealsItemList)
+                    .filter(mealsItem -> mealsItem.getStrMeal().toLowerCase()
+                            .contains(searchTextInput.getText().toString().toLowerCase()))
+                    .subscribe(
+                            filteredMealsItemList::add,
+                            throwable -> Log.e(TAG, "Error filtering meals", throwable),
+                            this::updateRecyclerViewWithFilteredMeals
+                    );
         }
     }
+
+    private void updateRecyclerViewWithFilteredMeals() {
+        setupRecyclerView(filteredMealsItemList);
+    }
+
 
 }

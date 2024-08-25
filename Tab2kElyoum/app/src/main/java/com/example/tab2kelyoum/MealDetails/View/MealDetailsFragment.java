@@ -64,7 +64,7 @@ public class MealDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<String> ingrediant = new ArrayList<>();
     private List<String> megure = new ArrayList<>();
-    private MealDeatailIngrediantAdapter mealDeatailIngrediantAdapter;
+    private MealDetailIngrediantAdapter mealDeatailIngrediantAdapter;
     private String[] split;
     private Boolean youtubeURLisExists = false;
     private ImageButton btn_addToFavorites_meal_details;
@@ -138,27 +138,27 @@ public class MealDetailsFragment extends Fragment {
         getIngredient(mealsItem.getStrIngredient12());
         getIngredient(mealsItem.getStrIngredient13());
         getIngredient(mealsItem.getStrIngredient15());
-        getMegure(mealsItem.getStrMeasure1());
-        getMegure(mealsItem.getStrMeasure2());
-        getMegure(mealsItem.getStrMeasure3());
-        getMegure(mealsItem.getStrMeasure4());
-        getMegure(mealsItem.getStrMeasure5());
-        getMegure(mealsItem.getStrMeasure6());
-        getMegure(mealsItem.getStrMeasure7());
-        getMegure(mealsItem.getStrMeasure8());
-        getMegure(mealsItem.getStrMeasure9());
-        getMegure(mealsItem.getStrMeasure10());
-        getMegure(mealsItem.getStrMeasure11());
-        getMegure(mealsItem.getStrMeasure12());
-        getMegure(mealsItem.getStrMeasure13());
-        getMegure(mealsItem.getStrMeasure15());
+        getMeasure(mealsItem.getStrMeasure1());
+        getMeasure(mealsItem.getStrMeasure2());
+        getMeasure(mealsItem.getStrMeasure3());
+        getMeasure(mealsItem.getStrMeasure4());
+        getMeasure(mealsItem.getStrMeasure5());
+        getMeasure(mealsItem.getStrMeasure6());
+        getMeasure(mealsItem.getStrMeasure7());
+        getMeasure(mealsItem.getStrMeasure8());
+        getMeasure(mealsItem.getStrMeasure9());
+        getMeasure(mealsItem.getStrMeasure10());
+        getMeasure(mealsItem.getStrMeasure11());
+        getMeasure(mealsItem.getStrMeasure12());
+        getMeasure(mealsItem.getStrMeasure13());
+        getMeasure(mealsItem.getStrMeasure15());
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        mealDeatailIngrediantAdapter = new MealDeatailIngrediantAdapter(ingrediant, megure);
+        mealDeatailIngrediantAdapter = new MealDetailIngrediantAdapter(ingrediant, megure);
         recyclerView.setAdapter(mealDeatailIngrediantAdapter);
 
         if (MainActivity.isLoginAsGuest == false) {
@@ -229,7 +229,6 @@ public class MealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               // Navigation.findNavController(view).navigate(MealDetailsFragmentDirections.actionMealDeatailsFragmentToNavCalendar(mealsItem.getStrMeal()));
 
 
             }
@@ -256,7 +255,7 @@ public class MealDetailsFragment extends Fragment {
         return ingrediant;
     }
 
-    private List<String> getMegure(String ingredientName) {
+    private List<String> getMeasure(String ingredientName) {
         if (ingredientName != null && !ingredientName.isEmpty())
             megure.add(ingredientName);
         return megure;

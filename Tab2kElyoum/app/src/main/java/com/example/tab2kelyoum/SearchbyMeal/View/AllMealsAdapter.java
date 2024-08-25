@@ -20,11 +20,11 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.Connection.RetrofitClient;
 import com.example.tab2kelyoum.Home.View.TodayPlannerAdapter;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -202,7 +202,7 @@ public class AllMealsAdapter extends RecyclerView.Adapter<AllMealsAdapter.MyView
 
         }
     }
-
+//to check that mealitem is already at firestore or not to be added
     private void checkIfItemAlreadyExistsInFavoritesOfFirestore(MealsItem mealsItemSelected) {
         isAlreadyInFavorites = false;
         FirebaseFirestore.getInstance().collection("userFavorites")
@@ -283,7 +283,7 @@ public class AllMealsAdapter extends RecyclerView.Adapter<AllMealsAdapter.MyView
                                        }
                 );
     }
-
+//upload to firestore userfav collection with showing message of success or failure
     private void uploadDataToFireStoreInFavorites(MealsItem mealsItem) {
         progressDialog = new ProgressDialog(viewGroup.getContext());
         progressDialog.setTitle("Adding to favorites");
@@ -332,7 +332,7 @@ public class AllMealsAdapter extends RecyclerView.Adapter<AllMealsAdapter.MyView
 
     }
 
-
+//check meal item if it is already at firestore or not to be added to firestore
     private void checkIfItemAlreadyExistsInWeekPlan(MealsItem mealsItemSelected, String weekDay) {
         isAlreadyInFavorites = false;
         FirebaseFirestore.getInstance().collection("userWeekPlan")
@@ -419,7 +419,7 @@ public class AllMealsAdapter extends RecyclerView.Adapter<AllMealsAdapter.MyView
                 );
         Log.i(TAG, " 3: => " + isAlreadyInFavorites.toString());
     }
-
+//upload mealitem to firestore with showing message of failure and success
     private void uploadDataToFireStoreInWeekPlan(MealsItem mealsItem, String weekDay) {
         progressDialog = new ProgressDialog(viewGroup.getContext());
         progressDialog.setTitle("Adding to week plan");

@@ -39,9 +39,9 @@ public class homePresenter {
         }
 
 
-        public void loadHeaderTitle() {
-            repositoryRemote = new RepoistryRemote();
-            repositoryRemote.changeHeaderTitle();
-        }
+     //   public void loadHeaderTitle() {
+       //     repositoryRemote = new RepoistryRemote();
+         //   repositoryRemote.changeHeaderTitle();
+        //}
     }
 

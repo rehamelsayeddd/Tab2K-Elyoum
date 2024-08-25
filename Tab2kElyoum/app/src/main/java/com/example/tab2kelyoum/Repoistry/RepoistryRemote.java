@@ -124,6 +124,7 @@ public class RepoistryRemote {
             this.interfaceMain = interfaceMain;
         }
 
+        //fetching random meals from api and passes to homepage interface
         public void getDailyInspirations() {
 
             String[] countriesList = {"Indian", "Italian", "Chinese", "French", "British"};
@@ -160,6 +161,7 @@ public class RepoistryRemote {
 
         }
 
+        //to register user with firebase
         public void createUserWithEmailAndPassword(String email, String password) {
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -168,7 +170,7 @@ public class RepoistryRemote {
                 }
             }) ;
         }
-
+//fetch list of countries  from api
         public void getAreas() {
             Observable<RootAreasList> observableAreas = retrofitClient.getMyApi().getRootAreasList();
             observableAreas.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
@@ -185,7 +187,7 @@ public class RepoistryRemote {
             );
         }
 
-
+//fetching by meals by countries and passes result to interface
         public void getMealFromSpecificCountry(String areaSelected) {
         retrofitClient.getMyApi()
                 .getMealsOfSelectedArea(areaSelected)
@@ -202,7 +204,7 @@ public class RepoistryRemote {
                 );
     }
 
-
+//fetch all categories from api and passes it to interface
         public void getAllCategories() {
             Observable<RootCategoriesList> observableCategory = retrofitClient.getMyApi().getRootCategoriesList();
 
@@ -210,7 +212,7 @@ public class RepoistryRemote {
                     response -> {
                         Log.i(TAG, "getAllCategories: " + response.getCategories());
                         categories = response.getCategories();
-                        Log.i(TAG, "getAllCategories:---------------- " + categories.size());
+                        Log.i(TAG, "getAllCategories:---- " + categories.size());
 
 
                     },
@@ -223,7 +225,7 @@ public class RepoistryRemote {
             );
         }
 
-
+//fetch meal based on category and pass it to interface
         public void getMealFromSpecificCategory(String categorySelected) {
             retrofitClient.getMyApi()
                     .getMealsOfSelectedCategory(categorySelected)
@@ -245,6 +247,7 @@ public class RepoistryRemote {
                     );
         }
 
+      //fetch all ingrideints from api
         public void getAllIngredients() {
             Observable<RootIngredientsList> observableCategory = RetrofitClient.getInstance().getMyApi().getRootIngredientsList();
 
@@ -265,7 +268,7 @@ public class RepoistryRemote {
 
         }
 
-
+//fetch all meals by specific Ingrident and pass it to interface
         public void getMealFromSpecificIngredient(String ingredientSelected) {
             RetrofitClient.getInstance().getMyApi()
                     .getMealsOfSelectedIngredient(ingredientSelected)
@@ -284,7 +287,7 @@ public class RepoistryRemote {
                             }
                     );
         }
-
+//fetchs the meals by specific letter
         public void getAllMeals(Character s) {
             Observable<RootMealsFromSingleLetter> observable = RetrofitClient.getInstance().getMyApi().getRootMealsBySingleLetter(s.toString());
             observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
@@ -304,7 +307,7 @@ public class RepoistryRemote {
                     }
             );
         }
-
+//usin firebase Auth and pass result to interface
         public void signIn(String email, String password) {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -329,7 +332,7 @@ public class RepoistryRemote {
         interfaceSignIn.onCompleteSignInIntent(signInIntent, 1000); // Ensure this method is correctly implemented
     }
 
-
+//to handle the process of signin in google
     public void respondToActivityResultOfGoogleSignIn(int requestCode, int resultCode, Intent data) {
             if (requestCode == 1000) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -344,15 +347,15 @@ public class RepoistryRemote {
         }
 
 
-        public void changeHeaderTitle() {
+      //  public void changeHeaderTitle() {
           //  MainActivity.tv_headerDrawer.setText(firebaseAuth.getCurrentUser().getEmail().split("@")[0]);
-        }
+        //}
 
         public void deleteDataForThisUser() {
             List<String> documentIDs = new ArrayList<>();
             getMealsToBeDeletedFromFavorites(documentIDs);
         }
-
+//fetches and delete user's meals from firestore using userEmail
         private void getMealsToBeDeletedFromFavorites(List<String> documentIDs) {
 
             FirebaseFirestore.getInstance().collection("userFavorites")
@@ -401,7 +404,7 @@ public class RepoistryRemote {
 
 
         }
-
+//delete firebase account and passing it to interface
         public void deleteAccount() {
             firebaseAuth.getCurrentUser().delete();
             interfaceMain.onFinishedDeletingAccount();

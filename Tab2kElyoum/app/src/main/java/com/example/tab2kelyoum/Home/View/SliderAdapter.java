@@ -3,7 +3,6 @@ package com.example.tab2kelyoum.Home.View;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,15 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.MainActivity.View.MainActivity;
 import com.example.tab2kelyoum.Model.MealsItem;
-import com.example.tab2kelyoum.Connection.NetworkChecker;
 import com.example.tab2kelyoum.R;
 import com.example.tab2kelyoum.Repoistry.RepoistryLocal;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -174,102 +171,100 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             });
 
         }
-
-
-
         if (position == meals.size() - 2) {
             viewPager2.post(runnable);
         }
-
-
     }
 
 
     private void checkIfItemAlreadyExistsInFavoritesOfFirestore(MealsItem mealsItemSelected) {
-
         isAlreadyInFavorites = false;
+        mealsItemSelected.setWeekDay("NULL");
+
         FirebaseFirestore.getInstance().collection("userFavorites")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                               mealsItemSelected.setWeekDay("NULL");
-
-                                               if (task.isSuccessful()) {
-                                                   for (QueryDocumentSnapshot document : task.getResult()) {
-                                                       if (document.get("strMeal").equals(mealsItemSelected.getStrMeal()) & document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-                                                           isAlreadyInFavorites = true;
-                                                           mealsItemSelected.documentID = document.getId();
-                                                       }
-                                                   }
-                                                   if (!isAlreadyInFavorites) {
-
-                                                       uploadDataToFireStoreInFavorites(mealsItemSelected);
-                                                   } else {
-                                                       AlertDialog.Builder builder = new AlertDialog.Builder(viewGroupOfMeal.getContext());
-                                                       builder.setTitle("This item is already in your favorite meals list.");
-                                                       builder.setMessage("Would you like to remove it?");
-                                                       builder.setCancelable(true);
-
-                                                       builder.setPositiveButton("Remove it.", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                                           if (!networkChecker.checkIfInternetIsConnected()) {
-                                                               MainActivity.mainActivity.runOnUiThread(new Runnable() {
-                                                                   @Override
-                                                                   public void run() {
-                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to be able to remove meals from your favorites.", Toast.LENGTH_SHORT).show();
-                                                                   }
-                                                               });
-
-                                                           } else if (networkChecker.checkIfInternetIsConnected()) {
-                                                               progressDialog = new ProgressDialog(viewGroupOfMeal.getContext());
-                                                               progressDialog.setTitle("Removing favorites");
-                                                               progressDialog.setMessage("Please wait while removing the selected item from your favorite meals.");
-                                                               progressDialog.setCanceledOnTouchOutside(true);
-                                                               progressDialog.show();
-
-                                                               FirebaseFirestore.getInstance().collection("userFavorites").document(mealsItemSelected.documentID)
-                                                                       .delete()
-                                                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                           @Override
-                                                                           public void onSuccess(Void aVoid) {
-                                                                               progressDialog.dismiss();
-
-                                                                               Toast.makeText(viewGroupOfMeal.getContext(), "Item removed successfully", Toast.LENGTH_SHORT).show();
-                                                                               Log.i(TAG, "DocumentSnapshot successfully deleted!");
-
-                                                                               repoistryLocal = new RepoistryLocal(viewGroupOfMeal.getContext());
-                                                                               repoistryLocal.delete(mealsItemSelected);
-
-                                                                           }
-                                                                       })
-                                                                       .addOnFailureListener(new OnFailureListener() {
-                                                                           @Override
-                                                                           public void onFailure(@NonNull Exception e) {
-                                                                               progressDialog.dismiss();
-                                                                               Toast.makeText(viewGroupOfMeal.getContext(), "Item removal failed", Toast.LENGTH_SHORT).show();
-                                                                               Log.i(TAG, "Error deleting document", e);
-                                                                           }
-                                                                       });
-                                                           }
-
-                                                       });
-                                                       builder.setNegativeButton("Keep it.", (DialogInterface.OnClickListener) (dialog, which) -> {
-
-                                                       });
-
-
-                                                       AlertDialog alertDialog = builder.create();
-                                                       alertDialog.show();
-
-                                                   }
-                                               } else {
-                                                   Log.i(TAG, "Error getting documents.", task.getException());
-                                               }
-                                           }
-                                       }
-                );
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        checkIfMealExistsInFavorites(task.getResult(), mealsItemSelected);
+                    } else {
+                        Log.i(TAG, "Error getting documents.", task.getException());
+                    }
+                });
     }
+
+    private void checkIfMealExistsInFavorites(QuerySnapshot result, MealsItem mealsItemSelected) {
+        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        for (QueryDocumentSnapshot document : result) {
+            if (isMealInFavorites(document, mealsItemSelected, currentUserEmail)) {
+                isAlreadyInFavorites = true;
+                mealsItemSelected.documentID = document.getId();
+                break;
+            }
+        }
+
+        if (isAlreadyInFavorites) {
+            showRemoveFavoriteDialog(mealsItemSelected);
+        } else {
+            uploadDataToFireStoreInFavorites(mealsItemSelected);
+        }
+    }
+
+    private boolean isMealInFavorites(QueryDocumentSnapshot document, MealsItem mealsItemSelected, String currentUserEmail) {
+        return document.get("strMeal").equals(mealsItemSelected.getStrMeal()) &&
+                document.get("userEmail").equals(currentUserEmail);
+    }
+
+    private void showRemoveFavoriteDialog(MealsItem mealsItemSelected) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(viewGroupOfMeal.getContext());
+        builder.setTitle("This item is already in your favorite meals list.")
+                .setMessage("Would you like to remove it?")
+                .setCancelable(true)
+                .setPositiveButton("Remove it.", (dialog, which) -> handleRemoveFavorite(mealsItemSelected))
+                .setNegativeButton("Keep it.", (dialog, which) -> {
+                    // Do nothing, just dismiss the dialog
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void handleRemoveFavorite(MealsItem mealsItemSelected) {
+        if (!networkChecker.checkIfInternetIsConnected()) {
+            showToastOnMainThread("Turn internet on to be able to remove meals from your favorites.");
+        } else {
+            showProgressDialog("Removing favorites", "Please wait while removing the selected item from your favorite meals.");
+            FirebaseFirestore.getInstance().collection("userFavorites").document(mealsItemSelected.documentID)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        progressDialog.dismiss();
+                        showToastOnMainThread("Item removed successfully");
+                        Log.i(TAG, "DocumentSnapshot successfully deleted!");
+
+                        // Delete from local database (Room)
+                        repoistryLocal = new RepoistryLocal(viewGroupOfMeal.getContext());
+                        repoistryLocal.delete(mealsItemSelected);
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        showToastOnMainThread("Item removal failed");
+                        Log.i(TAG, "Error deleting document", e);
+                    });
+        }
+    }
+
+    private void showToastOnMainThread(String message) {
+        MainActivity.mainActivity.runOnUiThread(() -> Toast.makeText(MainActivity.mainActivity, message, Toast.LENGTH_SHORT).show());
+    }
+
+    private void showProgressDialog(String title, String message) {
+        progressDialog = new ProgressDialog(viewGroupOfMeal.getContext());
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
+        progressDialog.setCanceledOnTouchOutside(true);
+        progressDialog.show();
+    }
+
 
     private void uploadDataToFireStoreInFavorites(MealsItem mealsItem) {
         progressDialog = new ProgressDialog(viewGroupOfMeal.getContext());
@@ -299,6 +294,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
+                        //insert to local database
                         repoistryLocal = new RepoistryLocal(viewGroupOfMeal.getContext());
                         repoistryLocal.insert(mealsItem, "NULL", documentReference.getId());
 
@@ -320,98 +316,106 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void checkIfItemAlreadyExistsInWeekPlan(MealsItem mealsItemSelected, String weekDay) {
         isAlreadyInFavorites = false;
-        FirebaseFirestore.getInstance().collection("userWeekPlan")
+
+        FirebaseFirestore.getInstance()
+                .collection("userWeekPlan")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                .addOnCompleteListener(task -> {
+                    mealsItemSelected.setWeekDay(weekDay);
 
-                                               mealsItemSelected.setWeekDay(weekDay);
+                    if (task.isSuccessful()) {
+                        checkIfMealAlreadyExists(task.getResult(), mealsItemSelected, weekDay);
+                    } else {
+                        Log.i(TAG, "Error getting documents.", task.getException());
+                    }
+                });
 
-                                               if (task.isSuccessful()) {
-                                                   for (QueryDocumentSnapshot document : task.getResult()) {
-
-
-                                                       if (document.get("strMeal").equals(mealsItemSelected.getStrMeal()) & document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) & document.get("weekDay").equals(weekDay)) {
-                                                           Log.i(TAG, "onComplete: here i am!!");
-                                                           isAlreadyInFavorites = true;
-                                                           mealsItemSelected.documentID = document.getId();
-                                                       }
-                                                   }
-
-                                                   if (!isAlreadyInFavorites) {
-
-                                                       uploadDataToFireStoreInWeekPlan(mealsItemSelected, weekDay);
-                                                   } else {
-                                                       AlertDialog.Builder builder = new AlertDialog.Builder(viewGroupOfMeal.getContext());
-                                                       builder.setTitle("This item is already in your week plan on this day.");
-                                                       builder.setMessage("Would you like to remove it?");
-                                                       builder.setCancelable(true);
-                                                       builder.setPositiveButton("Remove it.", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                                           if (!networkChecker.checkIfInternetIsConnected()) {
-                                                               MainActivity.mainActivity.runOnUiThread(new Runnable() {
-                                                                   @Override
-                                                                   public void run() {
-                                                                       Toast.makeText(MainActivity.mainActivity, "Turn internet on to remove meals from your week plan.", Toast.LENGTH_SHORT).show();
-                                                                   }
-                                                               });
-
-                                                           } else if (networkChecker.checkIfInternetIsConnected()) {
-                                                               progressDialog = new ProgressDialog(viewGroupOfMeal.getContext());
-                                                               progressDialog.setTitle("Removing favorites");
-                                                               progressDialog.setMessage("Please wait while removing the selected item from your favorite meals.");
-                                                               progressDialog.setCanceledOnTouchOutside(true);
-                                                               progressDialog.show();
-
-                                                               FirebaseFirestore.getInstance().collection("userWeekPlan").document(mealsItemSelected.documentID)
-                                                                       .delete()
-                                                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                           @RequiresApi(api = Build.VERSION_CODES.O)
-                                                                           @Override
-                                                                           public void onSuccess(Void aVoid) {
-                                                                               progressDialog.dismiss();
-                                                                               Toast.makeText(viewGroupOfMeal.getContext(), "Item removed successfully", Toast.LENGTH_SHORT).show();
-                                                                               Log.i(TAG, "DocumentSnapshot successfully deleted!");
-                                                                               //(FavoriteMealsAdapter.this).notifyDataSetChanged();
-
-                                                                               repoistryLocal = new RepoistryLocal(viewGroupOfMeal.getContext());
-                                                                               repoistryLocal.delete(mealsItemSelected);
-
-                                                                               if (weekDay.toLowerCase().equals(LocalDate.now().getDayOfWeek().name().toLowerCase()))
-                                                                                   TodayPlannerAdapter.getInstance().mealRemovedFromDailyInspirations(mealsItemSelected);
-
-
-                                                                           }
-                                                                       })
-                                                                       .addOnFailureListener(new OnFailureListener() {
-                                                                           @Override
-                                                                           public void onFailure(@NonNull Exception e) {
-                                                                               progressDialog.dismiss();
-                                                                               Toast.makeText(viewGroupOfMeal.getContext(), "Item removal failed", Toast.LENGTH_SHORT).show();
-                                                                               Log.i(TAG, "Error deleting document", e);
-                                                                           }
-                                                                       });
-                                                           }
-
-
-                                                       });
-                                                       builder.setNegativeButton("Keep it.", (DialogInterface.OnClickListener) (dialog, which) -> {
-
-                                                       });
-                                                       AlertDialog alertDialog = builder.create();
-                                                       alertDialog.show();
-
-                                                   }
-                                               } else {
-                                                   Log.i(TAG, "Error getting documents.", task.getException());
-                                               }
-                                           }
-                                       }
-                );
         Log.i(TAG, " 3: => " + isAlreadyInFavorites.toString());
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void checkIfMealAlreadyExists(QuerySnapshot result, MealsItem mealsItemSelected, String weekDay) {
+        for (QueryDocumentSnapshot document : result) {
+            if (documentMatchesMealAndDay(document, mealsItemSelected, weekDay)) {
+                isAlreadyInFavorites = true;
+                mealsItemSelected.documentID = document.getId();
+                break;
+            }
+        }
+
+        if (!isAlreadyInFavorites) {
+            uploadDataToFireStoreInWeekPlan(mealsItemSelected, weekDay);
+        } else {
+            showRemoveMealAlertDialog(mealsItemSelected, weekDay);
+        }
+    }
+
+    private boolean documentMatchesMealAndDay(QueryDocumentSnapshot document, MealsItem mealsItemSelected, String weekDay) {
+        return document.get("strMeal").equals(mealsItemSelected.getStrMeal()) &&
+                document.get("userEmail").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) &&
+                document.get("weekDay").equals(weekDay);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showRemoveMealAlertDialog(MealsItem mealsItemSelected, String weekDay) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(viewGroupOfMeal.getContext());
+        builder.setTitle("This item is already in your week plan on this day.")
+                .setMessage("Would you like to remove it?")
+                .setCancelable(true)
+                .setPositiveButton("Remove it.", (dialog, which) -> handleRemoveMealFromWeekPlan(mealsItemSelected, weekDay))
+                .setNegativeButton("Keep it.", null);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void handleRemoveMealFromWeekPlan(MealsItem mealsItemSelected, String weekDay) {
+        if (!networkChecker.checkIfInternetIsConnected()) {
+            MainActivity.mainActivity.runOnUiThread(() ->
+                    Toast.makeText(MainActivity.mainActivity, "Turn internet on to remove meals from your week plan.", Toast.LENGTH_SHORT).show()
+            );
+        } else {
+            showProgressDialog("Removing favorites", "Please wait while removing the selected item from your favorite meals.");
+
+            FirebaseFirestore.getInstance()
+                    .collection("userWeekPlan")
+                    .document(mealsItemSelected.documentID)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> handleSuccessfulRemoval(mealsItemSelected, weekDay))
+                    .addOnFailureListener(e -> handleFailedRemoval(e));
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void handleSuccessfulRemoval(MealsItem mealsItemSelected, String weekDay) {
+        dismissProgressDialog();
+        Toast.makeText(viewGroupOfMeal.getContext(), "Item removed successfully", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "DocumentSnapshot successfully deleted!");
+         //deleted from local databse (room)
+        repoistryLocal = new RepoistryLocal(viewGroupOfMeal.getContext());
+        repoistryLocal.delete(mealsItemSelected);
+
+        if (weekDay.equalsIgnoreCase(LocalDate.now().getDayOfWeek().name())) {
+            TodayPlannerAdapter.getInstance().mealRemovedFromDailyInspirations(mealsItemSelected);
+        }
+    }
+
+    private void handleFailedRemoval(@NonNull Exception e) {
+        dismissProgressDialog();
+        Toast.makeText(viewGroupOfMeal.getContext(), "Item removal failed", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "Error deleting document", e);
+    }
+
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
 
     private void uploadDataToFireStoreInWeekPlan(MealsItem mealsItem, String weekDay) {
         progressDialog = new ProgressDialog(viewGroupOfMeal.getContext());
