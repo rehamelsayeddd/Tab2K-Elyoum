@@ -1,7 +1,5 @@
 package com.example.tab2kelyoum.SplashScreen;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,7 +23,7 @@ public class SplashScreenFragment extends Fragment {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Handler handler;
     private Runnable handlerRunnable;
-    private static final int timer = 15000; //15seconds
+    private static final int timer = 4000; //4seconds to check user logged in or not
 
 
 
@@ -53,11 +51,11 @@ public class SplashScreenFragment extends Fragment {
         handlerRunnable = new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPref = requireContext().getSharedPreferences("setting", Context.MODE_PRIVATE);
+                //SharedPreferences sharedPref = requireContext().getSharedPreferences("setting", Context.MODE_PRIVATE);
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 Log.i("Splashscreen", "run: " + firebaseAuth.getCurrentUser());
-                boolean isFirst = sharedPref.getBoolean("first_look", false);
+               // boolean isFirst = sharedPref.getBoolean("first_look", false);
 
                 if (user == null) {
                     Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_signInFragment);

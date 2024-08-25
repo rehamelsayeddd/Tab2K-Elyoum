@@ -94,7 +94,7 @@ public class RepoistryLocal {
         return mealDAO.findMealByName(mealName, weekDayString);
     }
 
-//to load meals from firestore and store them in roomDB
+//to load meals from firestore and store them in roomDB to be shown offline
     public void loadRoomFromFirestore() {
         getFavoriteMealsUsingFirestore();
         getWeekPlanMealsUsingFirestore();

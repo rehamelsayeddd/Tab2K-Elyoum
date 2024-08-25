@@ -198,36 +198,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
   }
 
 
-   /** private void drawerDeleteAccount() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.WaitAreYouSure);
-        builder.setTitle(R.string.DeleteAccount);
-        builder.setCancelable(true);
 
-
-        builder.setPositiveButton(R.string.sure, (DialogInterface.OnClickListener) (dialog, which) -> {
-            if (!networkChecker.checkIfInternetIsConnected()) {
-                MainActivity.mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.mainActivity, R.string.turnOnInternent, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                mainActivityPresenter = new MainActivityPresenter((InterfaceMain) this);
-                mainActivityPresenter.deleteAccountData();
-            }
-        });
-
-        builder.setNegativeButton(R.string.keep, (DialogInterface.OnClickListener) (dialog, which) -> {
-            dialog.cancel();
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-    }
-     **/
    private void drawerDeleteAccount(){
        AlertDialog.Builder builder = new AlertDialog.Builder(this);
        builder.setMessage(R.string.WaitAreYouSure);
@@ -246,79 +217,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
        AlertDialog alertDialog = builder.create();
        alertDialog.show();
    }
-/**
-    private void checkNetwork() {
-        if (!networkChecker.checkIfInternetIsConnected()) {
-            tv_internetConnection.setVisibility(View.VISIBLE);
-            tv_internetConnection.setText(R.string.noInternet);
-           // tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.red));
-        }
 
-
-        NetworkRequest networkRequest = new NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-                .build();
-
-        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull Network network) {
-                super.onAvailable(network);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!timerIsExists) {
-                            timerIsExists = true;
-
-                         //   tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.green));
-                            tv_internetConnection.setText(R.string.backInternet);
-                            timer = new Timer();
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    runOnUiThread(new Runnable() {
-
-                                        @Override
-                                        public void run() {
-                                            tv_internetConnection.setVisibility(View.GONE);
-                                        }
-                                    });
-
-                                }
-                            }, 5000);
-                        }
-
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onLost(@NonNull Network network) {
-                super.onLost(network);
-                if (timerIsExists) {
-                    timerIsExists = false;
-                    timer.cancel();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_internetConnection.setVisibility(View.VISIBLE);
-                        tv_internetConnection.setText(R.string.noInternet);
-                       // tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.red));
-                    }
-                });
-
-            }
-
-
-        };
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        connectivityManager.requestNetwork(networkRequest, networkCallback);
-    } **/
 
     private void checkNetwork(){
         mainActivityPresenter.checkNetworkConnection();
@@ -406,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
     public void showBackInternetConnection() {
         if (!timerIsExists) {
             timerIsExists = true;
-            // tv_internetConnection.setBackgroundColor(getResources().getColor(R.color.green));
             tv_internetConnection.setText(R.string.backInternet);
             timer = new Timer();
             timer.schedule(new TimerTask() {

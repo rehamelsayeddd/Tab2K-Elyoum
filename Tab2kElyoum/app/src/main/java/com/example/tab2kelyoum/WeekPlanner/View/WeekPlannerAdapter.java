@@ -38,8 +38,7 @@ public class WeekPlannerAdapter extends RecyclerView.Adapter<WeekPlannerAdapter.
     private ViewGroup viewGroup;
     private List<MealsItem> mealsWeekPlanner = new ArrayList<>();
     private static final String TAG = "WeekPlannerAdapter";
-    private Boolean firstTimeInTheView = true;
-    private RepoistryLocal rep;
+    private RepoistryLocal repoistryLocal;
     private ProgressDialog progressDialog;
 
 
@@ -109,8 +108,8 @@ public class WeekPlannerAdapter extends RecyclerView.Adapter<WeekPlannerAdapter.
                                     Log.i(TAG, "DocumentSnapshot successfully deleted!");
                                     //(FavoriteMealsAdapter.this).notifyDataSetChanged();
 
-                                    rep = new RepoistryLocal(context);
-                                    rep.delete(mealsItem);
+                                    repoistryLocal = new RepoistryLocal(context);
+                                    repoistryLocal.delete(mealsItem);
 
                                     if (mealsItem.getWeekDay().toLowerCase().equals(LocalDate.now().getDayOfWeek().name().toLowerCase()))
                                         TodayPlannerAdapter.getInstance().mealRemovedFromDailyInspirations(mealsItem);

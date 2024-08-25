@@ -194,7 +194,7 @@ public class AllMeals extends Fragment implements InterfaceAllMeals {
         recyclerView.setAdapter(allMealsAdapter);
     }
 
-    private void filterMealsBasedOnSearchInput() { //after reconnecting to internet
+    private void filterMealsBasedOnSearchInput() {
         if (!mealsItemList.isEmpty()) {
             filteredMealsItemList.clear();
             Observable.fromIterable(mealsItemList)
