@@ -153,41 +153,6 @@ public class MainActivity extends AppCompatActivity implements InterfaceMain {
     }
 
 
-
-
-
- /**   public void setLocale(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-    } **/
-
-  /**  private void drawerLogOut() {
-        TodayPlannerAdapter.InstanceProvidingMeals = null;
-        FirebaseAuth.getInstance().signOut();
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-
-            isLoginAsGuest = false;
-
-            mainActivityPresenter = new MainActivityPresenter((Context) this);
-            mainActivityPresenter.deleteTableRoom();
-
-            while (navController.popBackStack() == true) {
-            }
-
-            toastLogOut = new Toast(this);
-            toastLogOut.makeText(MainActivity.this, R.string.logout, Toast.LENGTH_SHORT).show();
-
-
-            Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.signInFragment);
-        } else {
-            Toast.makeText(MainActivity.this, R.string.loggingOut, Toast.LENGTH_SHORT).show();
-        }
-    }
-   **/
   private void navigateToFragment(int fragmentId) {
       while (navController.popBackStack()) {}
       navController.navigate(fragmentId);
