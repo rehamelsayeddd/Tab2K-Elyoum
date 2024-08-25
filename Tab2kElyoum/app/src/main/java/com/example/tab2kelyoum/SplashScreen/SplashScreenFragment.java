@@ -1,24 +1,32 @@
 package com.example.tab2kelyoum.SplashScreen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.tab2kelyoum.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreenFragment extends Fragment {
     private LottieAnimationView gifImageView;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private Handler handler;
+    private Runnable handlerRunnable;
+    private static final int timer = 15000; //15seconds
+
 
 
     @Override
@@ -37,11 +45,43 @@ public class SplashScreenFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         gifImageView = view.findViewById(R.id.gif_food);
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            NavController navController = Navigation.findNavController(view);
-            navController.navigate(R.id.action_splashScreenFragment_to_signInFragment);
-        }, 15000); // 10000 milliseconds = 10 seconds
+        handler = new Handler();
+        handlerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences sharedPref = requireContext().getSharedPreferences("setting", Context.MODE_PRIVATE);
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                Log.i("Splashscreen", "run: " + firebaseAuth.getCurrentUser());
+                boolean isFirst = sharedPref.getBoolean("first_look", false);
+
+                if (user == null) {
+                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_signInFragment);
+
+                } else {
+                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_homepageFragment);
+
+                }
+            }
+        };
+
+        handler.postDelayed(handlerRunnable, timer);
+
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(handlerRunnable);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(handlerRunnable, timer);
+    }
+}
