@@ -21,7 +21,7 @@
     <string name="favv">Favourite</string>
     <string name="search">Search</string>
     <string name="username">email name</string>
-    <string name="calen">Calender</string>
+    <string name="calen">Week Plan</string>
     <string name="logout">Logged out</string>
     <string name="loggingOut">Logging out</string>
     <string name="must_login"> must login</string>
